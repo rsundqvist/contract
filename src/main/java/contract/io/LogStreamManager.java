@@ -45,7 +45,7 @@ public class LogStreamManager implements ComListener {
     public boolean                     PRETTY_PRINTING = false;
     private final Gson                 gson            = GsonContructor.build();
     private final Communicator         communicator;
-    private ComListener       listener;
+    private ComListener                listener;
     // Wrapper fields
     private Root                       wrapper;
     private Map<String, DataStructure> dataStructures;
@@ -53,8 +53,8 @@ public class LogStreamManager implements ComListener {
     private Map<String, List<String>>  sources;
 
     /**
-     * Creates a new LogStreamManager. Will not unwrap streamed messages
-     * if the listener is null.
+     * Creates a new LogStreamManager. Will not unwrap streamed messages if the listener
+     * is null.
      *
      * @param agentDescriptor
      *            The name of the agent using this LogStreamManager, such as
@@ -65,8 +65,8 @@ public class LogStreamManager implements ComListener {
     }
 
     /**
-     * Creates a new LogStreamManager. Will not unwrap streamed messages
-     * if the listener is null.
+     * Creates a new LogStreamManager. Will not unwrap streamed messages if the listener
+     * is null.
      *
      * @param suppressIncoming
      *            If {@code true}, most incoming messages will be ignored.
@@ -337,7 +337,7 @@ public class LogStreamManager implements ComListener {
 
     /**
      * Print a simplified version of the given wrapper.
-     * 
+     *
      * @param targetPath
      *            The target path, including file name.
      */
@@ -350,7 +350,7 @@ public class LogStreamManager implements ComListener {
 
     /**
      * Print a simplified version of the given wrapper.
-     * 
+     *
      * @param targetPath
      *            The target path, including file name.
      * @param wrapper
@@ -446,7 +446,8 @@ public class LogStreamManager implements ComListener {
         return this.unwrap(w);
     }
 
-    @Override public void messageReceived (short messageType) {
+    @Override
+    public void messageReceived (short messageType) {
         if (listener == null) {
             return;
         }

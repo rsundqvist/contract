@@ -47,7 +47,8 @@ public enum RawType {
         return null;
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         return pretty;
     }
 
@@ -68,7 +69,8 @@ public enum RawType {
             this.json = json;
         }
 
-        @Override public String toString () {
+        @Override
+        public String toString () {
             return pretty;
         }
 

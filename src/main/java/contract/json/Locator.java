@@ -16,12 +16,14 @@ public class Locator implements Serializable {
      */
     private static final long serialVersionUID = Const.VERSION_NUMBER;
     /**
-     * The identifier for this Locator. Will generally match one of the identifiers used as keys in
-     * the {@code annotatedVariables} HashMap of the variables declared in the header.
+     * The identifier for this Locator. Will generally match one of the identifiers used
+     * as keys in the {@code annotatedVariables} HashMap of the variables declared in the
+     * header.
      */
     public final String       identifier;
     /**
-     * The index from which the fetch a value in the variable identified by {@code identifier}.
+     * The index from which the fetch a value in the variable identified by
+     * {@code identifier}.
      */
     public final int[]        index;
 
@@ -39,11 +41,13 @@ public class Locator implements Serializable {
         this.index = index;
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         return Tools.stripQualifiers(identifier) + (index == null ? "" : Arrays.toString(index));
     }
 
-    @Override public boolean equals (Object other) {
+    @Override
+    public boolean equals (Object other) {
         if (this == other) {
             return true;
         }

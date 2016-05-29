@@ -11,8 +11,8 @@ import contract.operation.OP_Swap;
 import contract.operation.OperationType;
 
 /**
- * An independent variable holding a single element. May for example be used as a temporary variable
- * when performing a swap.
+ * An independent variable holding a single element. May for example be used as a
+ * temporary variable when performing a swap.
  *
  * @author Richard Sundqvist
  *
@@ -57,7 +57,7 @@ public class IndependentElement extends Array {
      *            The value to initialize with.
      */
     public void initElement (double value) {
-        Element init = new Array.IndexedElement(value, new int[] { 0 });
+        Element init = new IndexedElement(value, new int[] { 0 });
         elements.clear();
         elements.add(init);
     }
@@ -74,18 +74,21 @@ public class IndependentElement extends Array {
         return elements.get(0).getNumValue();
     }
 
-    @Override public void clear () {
+    @Override
+    public void clear () {
         elements.clear();
         oc.reset();
         setRepaintAll(true);
     }
 
-    @Override public void applyOperation (Operation op) {
+    @Override
+    public void applyOperation (Operation op) {
         super.applyOperation(op);
         setRepaintAll(true);
     }
 
-    @Override protected void executeSwap (OP_Swap op) {
+    @Override
+    protected void executeSwap (OP_Swap op) {
         Element e = elements.get(0);
         if (op.getVar1().identifier.equals(identifier)) {
             e.setValue(op.getValue() [0]);
@@ -100,7 +103,8 @@ public class IndependentElement extends Array {
         }
     }
 
-    @Override protected void executeRW (OP_ReadWrite op) {
+    @Override
+    protected void executeRW (OP_ReadWrite op) {
         if (elements.isEmpty()) {
             initElement(op.getValue() [0]);
         }
@@ -118,12 +122,14 @@ public class IndependentElement extends Array {
         }
     }
 
-    @Override public VisualType resolveVisual () {
+    @Override
+    public VisualType resolveVisual () {
         setVisual(VisualType.single);
         return VisualType.single;
     }
 
-    @Override public IndexedElement getElement (Locator locator) {
+    @Override
+    public IndexedElement getElement (Locator locator) {
         if (locator == null) {
             return null;
         }
@@ -135,7 +141,8 @@ public class IndependentElement extends Array {
         }
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         StringBuilder sb = new StringBuilder();
         sb.append("\"" + Tools.stripQualifiers(identifier) + "\": " + rawType);
         return sb.toString();

@@ -35,8 +35,8 @@ public abstract class HighLevelOperation extends Operation {
      * @param endColumn
      *            The last line column operation originates from.
      */
-    public HighLevelOperation (OperationType operation, HashMap<Key, Object> operationBody, String source, int beginLine,
-            int endLine, int beginColumn, int endColumn) {
+    public HighLevelOperation (OperationType operation, HashMap<Key, Object> operationBody, String source,
+            int beginLine, int endLine, int beginColumn, int endColumn) {
         super(operation, new HashMap<Key, Object>(), source, beginLine, endLine, beginColumn, endColumn);
     }
 

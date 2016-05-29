@@ -27,7 +27,8 @@ public class Root implements Serializable {
      * Create a new Wrapper with the given header and body.
      *
      * @param header
-     *            Header data for the file. Contains version number and variable declarations.
+     *            Header data for the file. Contains version number and variable
+     *            declarations.
      * @param body
      *            Operations contained in this file.
      */
@@ -36,7 +37,8 @@ public class Root implements Serializable {
         this.body = body;
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         return "header = " + header + ",\n" + "body = " + body;
     }
 }

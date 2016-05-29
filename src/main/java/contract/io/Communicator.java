@@ -57,7 +57,8 @@ public interface Communicator {
      * Internal class
      */
     /**
-     * Wrapper for messages sent and recevied by implementations of the Communicator interface.
+     * Wrapper for messages sent and recevied by implementations of the Communicator
+     * interface.
      *
      * @author Richard Sundqvist
      *
@@ -70,12 +71,13 @@ public interface Communicator {
          */
         public static final short WRAPPER                    = 0;
         /**
-         * Message containing a String on the JSON format, which may be deserialized into a Wrapper.
+         * Message containing a String on the JSON format, which may be deserialized into
+         * a Wrapper.
          */
         public static final short JSON                       = 1;
         /**
-         * Sent when the Communicator starts to announce it's presence, triggering information
-         * requests.
+         * Sent when the Communicator starts to announce it's presence, triggering
+         * information requests.
          */
         public static final short HELLO                      = 10;
         /**

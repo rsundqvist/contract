@@ -55,8 +55,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      */
     protected transient final ObservableList<Element> inactiveElements     = FXCollections.observableArrayList();
     /**
-     * If false, this entire DataStructure is considered inactive (as opposed to just a single
-     * element).
+     * If false, this entire DataStructure is considered inactive (as opposed to just a
+     * single element).
      */
     private transient boolean                         active               = true;
     /**
@@ -70,8 +70,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     protected transient boolean                       repaintAll           = false;
 
     /**
-     * Indicates that this structure's {@link #applyOperation(Operation)} method has been called.
-     * This variable is never reset.
+     * Indicates that this structure's {@link #applyOperation(Operation)} method has been
+     * called. This variable is never reset.
      */
     protected transient boolean                       applyOperationCalled = false;
 
@@ -137,10 +137,11 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
 
     /**
      * Resolves the VisualType for this DataStructure. Will check {@code visual} ,
-     * {@code abstractType}, and {@code rawType}, in that order. This method never may not null.
+     * {@code abstractType}, and {@code rawType}, in that order. This method never may not
+     * null. <br>
      * <br>
-     * <br>
-     * <b>NOTE:</b> Implementations should call setVisual() to notify listeners of any changes.
+     * <b>NOTE:</b> Implementations should call setVisual() to notify listeners of any
+     * changes.
      *
      * @return The Visual to use for this DataStructure.
      */
@@ -166,7 +167,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      *            The operation to be apply.
      */
     public void applyOperation (Operation op) {
-        this.applyOperationCalled = true;
+        applyOperationCalled = true;
 
         switch (op.operation) {
         case read:
@@ -186,8 +187,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * Indicate to the DataStructure that the lists returned by {@code getModifiedElements()}
-     * <b>and</b> {@code getResetElements} have been drawn.
+     * Indicate to the DataStructure that the lists returned by
+     * {@code getModifiedElements()} <b>and</b> {@code getResetElements} have been drawn.
      *
      * @param paint
      *            The color to use for this element after reset. Null defaults to white.
@@ -209,10 +210,10 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * Mark an element as inactive. If this method is called with an active element as target, the
-     * element will be reactivated. If the target of the Remove operation has an identifier
-     * equalling the identifier of this DataStructure but no index, the entire structure will become
-     * inactive.
+     * Mark an element as inactive. If this method is called with an active element as
+     * target, the element will be reactivated. If the target of the Remove operation has
+     * an identifier equalling the identifier of this DataStructure but no index, the
+     * entire structure will become inactive.
      *
      * @param op
      *            A Remove operation.
@@ -251,7 +252,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     // ============================================================= //
 
     /**
-     * Returns the list of elements held by this DataStructure. Used when drawing the elements.
+     * Returns the list of elements held by this DataStructure. Used when drawing the
+     * elements.
      *
      * @return The list of elements held by this DataStructure.
      */
@@ -260,10 +262,10 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * A list of elements which have been modified. They should be drawn with a different colour.
-     * All elements which were in the list when this method is called are copied to the list
-     * returned by {@code getResetElements}. The list should be cleared manually once drawing is
-     * done.
+     * A list of elements which have been modified. They should be drawn with a different
+     * colour. All elements which were in the list when this method is called are copied
+     * to the list returned by {@code getResetElements}. The list should be cleared
+     * manually once drawing is done.
      *
      * @return A list of elements which have been modified.
      */
@@ -272,9 +274,9 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * A list of elements which were modified but have already been drawn as such. Their colours
-     * should be reset. As the list is never cleared, it should be done manually once elements have
-     * been drawn.
+     * A list of elements which were modified but have already been drawn as such. Their
+     * colours should be reset. As the list is never cleared, it should be done manually
+     * once elements have been drawn.
      *
      * @return A list of elements whose colour should be reset.
      */
@@ -292,8 +294,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * Clear {@code modifierElements()}, {@code resetElements()} and {@code inactiveElements()}
-     * lists.
+     * Clear {@code modifierElements()}, {@code resetElements()} and
+     * {@code inactiveElements()} lists.
      */
     public void clearElementLists () {
         modifiedElements.clear();
@@ -318,7 +320,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
 
     /**
      * Indiciates whether the structure should be completely redrawn.
-     * 
+     *
      * @return {@code true} if the data structure needs a complete rerender.
      */
     public boolean isRepaintAll () {
@@ -326,9 +328,9 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * Set the flag indicate whether this structure has changed so significantly that all elements
-     * should be drawn again.
-     * 
+     * Set the flag indicate whether this structure has changed so significantly that all
+     * elements should be drawn again.
+     *
      * @param repaintAll
      *            The new repaint status for the structure.
      */
@@ -337,11 +339,11 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     }
 
     /**
-     * {@code true} indicates that this structure's {@link #applyOperation(Operation)} method has
-     * been called. This variable is never reset.
-     * 
-     * @return {@code true} if this data structure has been accessed using {@code applyOperation ()}
-     *         .
+     * {@code true} indicates that this structure's {@link #applyOperation(Operation)}
+     * method has been called. This variable is never reset.
+     *
+     * @return {@code true} if this data structure has been accessed using
+     *         {@code applyOperation ()} .
      */
     public boolean isApplyOperationCalled () {
         return applyOperationCalled;
@@ -396,7 +398,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
         visualListener = listener;
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         StringBuilder sb = new StringBuilder();
         sb.append("\"" + Tools.stripQualifiers(identifier) + "\": " + rawType + " [");
 
@@ -415,7 +418,8 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      */
     // ============================================================= //
 
-    @Override public OperationCounter getCounter () {
+    @Override
+    public OperationCounter getCounter () {
         return oc;
     }
 

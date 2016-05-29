@@ -4,5 +4,4 @@ public abstract class StructUtil {
     private StructUtil () {
     } // Not to be instantiated.
 
-    
 }

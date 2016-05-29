@@ -21,7 +21,7 @@ import contract.json.Root;
  *
  */
 public class JGroupCommunicator extends ReceiverAdapter implements Communicator {
-    
+
     // ============================================================= //
     /*
      *
@@ -39,9 +39,10 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      */
     public static final short              SENDER_MODE_JSON   = 1;
     /**
-     * If true, most incoming messages will be ignored. The messageReceived() method of the listener
-     * will be called only if the listener has requested a head count of group members. Useful when
-     * the owner of this JGroupCommunicator functions exclusively as the sender.
+     * If true, most incoming messages will be ignored. The messageReceived() method of
+     * the listener will be called only if the listener has requested a head count of
+     * group members. Useful when the owner of this JGroupCommunicator functions
+     * exclusively as the sender.
      */
     public final String                    hierarchy;
     public boolean                         suppressIncoming;
@@ -49,7 +50,7 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     private short                          senderMode;
     private String                         channel;
     private final List<Root>               incomingQueue;
-    private final ComListener     listener;
+    private final ComListener              listener;
     private final Gson                     gson;
     private JChannel                       jChannel;
     private final HashMap<Integer, String> allTransmitters;
@@ -61,10 +62,10 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *
      */
     // ============================================================= //
-    
+
     /**
-     * Create a new JGroupCommunicator with a random transmitter id. Connects to the default
-     * channel.
+     * Create a new JGroupCommunicator with a random transmitter id. Connects to the
+     * default channel.
      *
      * @param listener
      *            The listener for this JGroupCommunicator.
@@ -74,8 +75,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     }
 
     /**
-     * Create a new JGroupCommunicator with a random transmitter id. Connects to the default
-     * channel.
+     * Create a new JGroupCommunicator with a random transmitter id. Connects to the
+     * default channel.
      *
      * @param listener
      *            The listener for this JGroupCommunicator.
@@ -87,7 +88,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     }
 
     /**
-     * Create a new JGroupCommunicator with the given transmitter id. Connects to the given channel.
+     * Create a new JGroupCommunicator with the given transmitter id. Connects to the
+     * given channel.
      *
      * @param hierarchy
      *            The user hierarchy for this JGroupCommunicator.
@@ -135,7 +137,7 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *
      */
     // ============================================================= //
-    
+
     /**
      * Returns the name of the channel this JGroupCommunicator is connected to.
      *
@@ -172,7 +174,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     }
 
     /**
-     * Set the sender mode of this JGroupCommunicator to JSON (Wrapper serialised as JSON String).
+     * Set the sender mode of this JGroupCommunicator to JSON (Wrapper serialised as JSON
+     * String).
      */
     public void setJSONSenderMode () {
         senderMode = SENDER_MODE_JSON;
@@ -186,7 +189,7 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     public int getSenderMode () {
         return senderMode;
     }
-    
+
     // ============================================================= //
     /*
      *
@@ -195,7 +198,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      */
     // ============================================================= //
 
-    @Override public void receive (Message incoming) {
+    @Override
+    public void receive (Message incoming) {
         Object messageObject = incoming.getObject();
         if (messageObject instanceof CommunicatorMessage == false) {
             System.err.println("Invalid message type: " + messageObject);
@@ -230,14 +234,14 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
             break;
         }
     }
-    
+
     // ============================================================= //
     /*
      *
      * Utility
      *
      */
-    // ============================================================= 
+    // =============================================================
 
     private void handleInformationExchange (String member_string, short messageType, int senderId) {
         switch (messageType) {
@@ -287,10 +291,10 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *
      */
     // ============================================================= //
-    
+
     /**
-     * Enable/disable listening for member info. Used to get a head count of of agents connected to
-     * the current channel. Listener will be notified on by a call to
+     * Enable/disable listening for member info. Used to get a head count of of agents
+     * connected to the current channel. Listener will be notified on by a call to
      * messageReceived(MavserMessage.MEMBER_INFO).
      *
      * @param value
@@ -338,7 +342,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *
      * @return The first received Wrapper in queue.
      */
-    @Override public Root popQueuedMessage () {
+    @Override
+    public Root popQueuedMessage () {
         return incomingQueue.remove(0);
     }
 
@@ -347,7 +352,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *
      * @return The all received Wrappers in queue.
      */
-    @Override public List<Root> getAllQueuedMessages () {
+    @Override
+    public List<Root> getAllQueuedMessages () {
         ArrayList<Root> allQueuedMessages = new ArrayList<Root>();
         if (incomingQueue.isEmpty() == false) {
             allQueuedMessages.addAll(incomingQueue);
@@ -362,7 +368,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      * @param outgoing
      *            The Wrapper to send.
      */
-    @Override public boolean sendWrapper (Root outgoing) {
+    @Override
+    public boolean sendWrapper (Root outgoing) {
         Message outMessage = new Message();
         if (senderMode == SENDER_MODE_NATIVE) {
             outMessage.setObject(new CommunicatorMessage(outgoing, senderId, CommunicatorMessage.WRAPPER));
@@ -389,7 +396,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
      *            The JSON String to send.
      * @return True if the String was successfully sent. False otherwise.
      */
-    @Override public boolean sendString (String JSONString) {
+    @Override
+    public boolean sendString (String JSONString) {
         Message m = new Message();
         m.setObject(new CommunicatorMessage(JSONString, senderId, CommunicatorMessage.JSON));
         try {
@@ -401,7 +409,8 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
         return true;
     }
 
-    @Override public boolean sendWrappers (List<Root> outgoing) {
+    @Override
+    public boolean sendWrappers (List<Root> outgoing) {
         boolean allSuccessful = true;
         for (Root w : outgoing) {
             allSuccessful = allSuccessful && sendWrapper(w);
@@ -410,10 +419,11 @@ public class JGroupCommunicator extends ReceiverAdapter implements Communicator 
     }
 
     /**
-     * Destroy channel and free resources. Should be called before exiting to prevent resource
-     * leaks.
+     * Destroy channel and free resources. Should be called before exiting to prevent
+     * resource leaks.
      */
-    @Override public void close () {
+    @Override
+    public void close () {
         jChannel.close();
     }
 

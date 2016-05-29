@@ -86,7 +86,7 @@ public class Array extends DataStructure {
     }
 
     public void setCapacity () {
-        
+
     }
 
     private void init (OP_ReadWrite rw) {
@@ -128,24 +128,25 @@ public class Array extends DataStructure {
         // Dont spam the listener.
         double initMin = values [0];
         double initMax = values [0];
-        
+
         for (int i = 1; i < values.length; i++) {
-            double val = values[i];
-            
+            double val = values [i];
+
             if (val < initMin) {
                 initMin = val;
             }
-            
+
             if (val > initMax) {
                 initMin = val;
             }
         }
-        
+
         checkMinMaxChanged(initMin);
         checkMinMaxChanged(initMax);
     }
 
-    @Override public void clear () {
+    @Override
+    public void clear () {
         elements.clear();
         clearElementLists();
         resetMinMax();
@@ -153,7 +154,8 @@ public class Array extends DataStructure {
         setRepaintAll(true);
     }
 
-    @Override protected void executeSwap (OP_Swap op) {
+    @Override
+    protected void executeSwap (OP_Swap op) {
         Locator var1 = op.getVar1();
         Locator var2 = op.getVar2();
         IndexedElement var1Element = this.getElement(var1);
@@ -176,7 +178,8 @@ public class Array extends DataStructure {
         }
     }
 
-    @Override protected void executeRW (OP_ReadWrite op) {
+    @Override
+    protected void executeRW (OP_ReadWrite op) {
         double[] value = op.getValue();
         if (value == null || value.length < 1) {
             System.err.println("Bad value in operation: " + op);
@@ -306,7 +309,8 @@ public class Array extends DataStructure {
      * @return The element at the location specified by the given locator, if it was
      *         valid. Null otherwise.
      */
-    @Override public IndexedElement getElement (Locator locator) {
+    @Override
+    public IndexedElement getElement (Locator locator) {
         if (locator == null || locator.identifier.equals(identifier) == false) {
             return null;
         }
@@ -355,88 +359,6 @@ public class Array extends DataStructure {
     }
 
     /**
-     * An indexed element belonging to an Array.
-     *
-     * @author Richard Sundqvist
-     *
-     */
-    public static class IndexedElement extends Element {
-
-        private int[] index;
-
-        /**
-         * Construct a new ArrayElement with the given value and index.
-         *
-         * @param value
-         *            The value for this ArrayElement.
-         * @param index
-         *            The index for this ArrayElement.
-         */
-        public IndexedElement (double value, int[] index) {
-            this.setValue(value);
-            setIndex(index);
-        }
-
-        private final int primes[] = { 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701,
-                709, 719, 727, 733 };
-
-        // TODO
-        @Override public int hashCode () {
-            if (index == null) {
-                return -1;
-            }
-
-            int indexHash = 0;
-            for (int i = 0; i < index.length; i++) {
-                indexHash = index [i] * primes [i];
-            }
-            return indexHash;
-        }
-
-        /**
-         * Get the index of this ArrayElement.
-         *
-         * @return The index of this ArrayElement.
-         */
-        public int[] getIndex () {
-            return index;
-        }
-
-        /**
-         * Set the index of this ArrayElement.
-         *
-         * @param newIndex
-         *            The new index of this ArrayElement.
-         */
-        public void setIndex (int[] newIndex) {
-            index = newIndex;
-        }
-
-        /**
-         * Returns true if value and index are equal, false otherwise.
-         *
-         * @param obj
-         *            The object to compare this ArrayVariable to.
-         */
-        @Override public boolean equals (Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (obj instanceof IndexedElement == false) {
-                return false;
-            }
-            IndexedElement rhs = (IndexedElement) obj;
-            return getNumValue() == rhs.getNumValue() && Arrays.equals(index, rhs.index);
-        }
-
-        // TODO
-        @Override public String toString () {
-            // return hashCode() + "";
-            return Arrays.toString(index) + " = " + getNumValue();
-        }
-    }
-
-    /**
      * Resolves the VisualType for this DataStructure. Will check {@code visual} ,
      * {@code abstractType}, and {@code rawType}, in that order. <br>
      * <br>
@@ -445,7 +367,8 @@ public class Array extends DataStructure {
      *
      * @return The {@link #VisualType} to use for this Array.
      */
-    @Override public VisualType resolveVisual () {
+    @Override
+    public VisualType resolveVisual () {
         if (visual != null) {
             return visual;
 

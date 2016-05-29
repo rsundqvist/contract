@@ -69,7 +69,8 @@ public class OP_Swap extends HighLevelOperation {
         return (double[]) operationBody.get(Key.value);
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         return "SWAP: " + getVar1().toString() + " <-> " + getVar2().toString();
     }
 
@@ -81,7 +82,8 @@ public class OP_Swap extends HighLevelOperation {
      * @return A new Swap operation if the given testSet is a valid decomposition of a
      *         Swap operation, null otherwise.
      */
-    @Override public Operation consolidate (List<OP_ReadWrite> rwList) {
+    @Override
+    public Operation consolidate (List<OP_ReadWrite> rwList) {
         if (rwList.size() != OperationType.swap.numAtomicOperations) {
             throw new IllegalArgumentException("Swap operations are composed of 3 read/write operations.");
         }
@@ -118,7 +120,8 @@ public class OP_Swap extends HighLevelOperation {
         return op_swap;
     }
 
-    @Override public String toSimpleString () {
+    @Override
+    public String toSimpleString () {
         return toString();
     }
 }

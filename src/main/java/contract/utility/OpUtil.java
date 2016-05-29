@@ -7,7 +7,7 @@ import contract.operation.OperationType;
 
 /**
  * Utility class for operations.
- * 
+ *
  * @author Richard Sundqvist
  *
  */
@@ -50,12 +50,12 @@ public abstract class OpUtil {
 
     /**
      * Returns {@code true} if the operation is of type read, write, or message.
-     * 
+     *
      * @param op
      * @return {@code true} if the operation is atomic, {@code false} otherwise.
      */
     public static boolean isAtomic (Operation op) {
-        return (op.operation.numAtomicOperations < 2);
+        return op.operation.numAtomicOperations < 2;
     }
 
     /**

@@ -26,24 +26,26 @@ public class OP_Read extends OP_ReadWrite {
     }
 
     /**
-     * Set the target variable for this Read operation. The identifier of the variable should be
-     * previously declared in the header.
+     * Set the target variable for this Read operation. The identifier of the variable
+     * should be previously declared in the header.
      *
      * @param target
      *            The target variable for this Read operation.
      */
-    @Override public void setTarget (Locator target) {
+    @Override
+    public void setTarget (Locator target) {
         operationBody.put(Key.target, target);
     }
 
     /**
-     * Set the source variable for this Read operation. The identifier of the variable should be
-     * previously declared in the header.
+     * Set the source variable for this Read operation. The identifier of the variable
+     * should be previously declared in the header.
      *
      * @param source
      *            The source variable for this Read operation.
      */
-    @Override public void setSource (Locator source) {
+    @Override
+    public void setSource (Locator source) {
         if (source == null) {
             System.err.println("Source null in Write operation!");
         }
@@ -57,19 +59,23 @@ public class OP_Read extends OP_ReadWrite {
      * @param value
      *            Set the value(s) which were read from {@code source}.
      */
-    @Override public void setValue (double[] value) {
+    @Override
+    public void setValue (double[] value) {
         operationBody.put(Key.value, value);
     }
 
-    @Override public Locator getTarget () {
+    @Override
+    public Locator getTarget () {
         return (Locator) operationBody.get(Key.target);
     }
 
-    @Override public Locator getSource () {
+    @Override
+    public Locator getSource () {
         return (Locator) operationBody.get(Key.source);
     }
 
-    @Override public double[] getValue () {
+    @Override
+    public double[] getValue () {
         return (double[]) operationBody.get(Key.value);
     }
 }

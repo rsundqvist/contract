@@ -58,7 +58,8 @@ public enum VisualType {
         return null;
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         return pretty;
     }
 

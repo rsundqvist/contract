@@ -184,7 +184,8 @@ public class OperationCounter {
         public OperationCounter getCounter ();
 
         /**
-         * Print stats for a OperationCounterHaver using the {@link #getStatistics()} method.
+         * Print stats for a OperationCounterHaver using the {@link #getStatistics()}
+         * method.
          *
          * @param och
          *            The OperationCounterHaver whose counter should be used.

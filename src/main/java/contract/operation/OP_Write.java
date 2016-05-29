@@ -26,13 +26,14 @@ public class OP_Write extends OP_ReadWrite {
     }
 
     /**
-     * Set the target variable for this Write operation. The identifier of the variable should be
-     * previously declared in the header.
+     * Set the target variable for this Write operation. The identifier of the variable
+     * should be previously declared in the header.
      *
      * @param target
      *            The target variable for this Write operation.
      */
-    @Override public void setTarget (Locator target) {
+    @Override
+    public void setTarget (Locator target) {
         if (target == null) {
             System.err.println("Target null in Write operation!");
         }
@@ -40,35 +41,41 @@ public class OP_Write extends OP_ReadWrite {
     }
 
     /**
-     * Set the source variable for this Write operation. The identifier of the variable should be
-     * previously declared in the header.
+     * Set the source variable for this Write operation. The identifier of the variable
+     * should be previously declared in the header.
      *
      * @param source
      *            The source variable for this Write operation.
      */
-    @Override public void setSource (Locator source) {
+    @Override
+    public void setSource (Locator source) {
         operationBody.put(Key.source, source);
     }
 
     /**
-     * Set the value(s) which were written to {@code target} (from {@code source}, if applicable).
+     * Set the value(s) which were written to {@code target} (from {@code source}, if
+     * applicable).
      *
      * @param value
      *            Set the value(s) written to {@code target}.
      */
-    @Override public void setValue (double[] value) {
+    @Override
+    public void setValue (double[] value) {
         operationBody.put(Key.value, value);
     }
 
-    @Override public Locator getTarget () {
+    @Override
+    public Locator getTarget () {
         return (Locator) operationBody.get(Key.target);
     }
 
-    @Override public Locator getSource () {
+    @Override
+    public Locator getSource () {
         return (Locator) operationBody.get(Key.source);
     }
 
-    @Override public double[] getValue () {
+    @Override
+    public double[] getValue () {
         return (double[]) operationBody.get(Key.value);
     }
 }

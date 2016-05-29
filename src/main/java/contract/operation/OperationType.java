@@ -42,7 +42,7 @@ public enum OperationType {
     public final int   numAtomicOperations;
 
     OperationType (Color color, int numOperations) {
-        this.numAtomicOperations = numOperations;
+        numAtomicOperations = numOperations;
         this.color = color;
     }
 }

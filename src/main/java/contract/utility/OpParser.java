@@ -174,7 +174,8 @@ public abstract class OpParser {
         return ensureDoubleArray(op.operationBody.get(Key.value));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) private static double[] ensureDoubleArray (Object object) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private static double[] ensureDoubleArray (Object object) {
         if (object == null) {
             return null;
         }
@@ -217,7 +218,8 @@ public abstract class OpParser {
      *            Should be an int array, or an ArrayList of Integers or Doubles.
      * @return An array of ints, or null.
      */
-    @SuppressWarnings("unchecked") public static int[] ensureIntArray (Object listOrArray) {
+    @SuppressWarnings("unchecked")
+    public static int[] ensureIntArray (Object listOrArray) {
         if (listOrArray == null) {
             return null;
         }

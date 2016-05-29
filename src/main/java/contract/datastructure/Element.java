@@ -19,8 +19,8 @@ import javafx.scene.paint.Paint;
 public abstract class Element implements OperationCounterHaver {
 
     /**
-     * String property for this element. Will be updated when the string <b>or</b> double value is
-     * changed.
+     * String property for this element. Will be updated when the string <b>or</b> double
+     * value is changed.
      */
     public final SimpleStringProperty        stringProperty = new SimpleStringProperty();
     /**
@@ -28,7 +28,8 @@ public abstract class Element implements OperationCounterHaver {
      */
     public final SimpleDoubleProperty        numProperty    = new SimpleDoubleProperty();
     /**
-     * Fill property for this element. Updated when the {@link #count(Operation)} method is called.
+     * Fill property for this element. Updated when the {@link #count(Operation)} method
+     * is called.
      */
     public final SimpleObjectProperty<Paint> fillProperty   = new SimpleObjectProperty<Paint>();
     /**
@@ -41,7 +42,8 @@ public abstract class Element implements OperationCounterHaver {
      */
 
     /**
-     * The numeric value for this element before the last call to {@link #setValue(double)}. <br>
+     * The numeric value for this element before the last call to
+     * {@link #setValue(double)}. <br>
      * {@link Double#POSITIVE_INFINITY} indicates that the element is inactive. <br>
      * {@link Double#NEGATIVE_INFINITY} indicates that the value has never been set using
      * {@link #setValue(double)}.
@@ -155,11 +157,11 @@ public abstract class Element implements OperationCounterHaver {
     }
 
     /**
-     * Restores the previous value for this Element by calling {@link #setValue(double)}, and
-     * returns the value to the caller. <br>
+     * Restores the previous value for this Element by calling {@link #setValue(double)},
+     * and returns the value to the caller. <br>
      * <br>
-     * The previous value for this element before the last call to {@link #setValue(double)}, which
-     * is generally invoked by the the model. <br>
+     * The previous value for this element before the last call to
+     * {@link #setValue(double)}, which is generally invoked by the the model. <br>
      * <br>
      * {@link Double#POSITIVE_INFINITY} indicates that the element is inactive. <br>
      * {@link Double#NEGATIVE_INFINITY} indicates that the value has never been set using
@@ -182,7 +184,8 @@ public abstract class Element implements OperationCounterHaver {
         return prevNumValue;
     }
 
-    @Override public OperationCounter getCounter () {
+    @Override
+    public OperationCounter getCounter () {
         return oc;
     }
 }

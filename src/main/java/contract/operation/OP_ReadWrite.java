@@ -8,7 +8,8 @@ import contract.json.Locator;
 import contract.json.Operation;
 
 /**
- * A primitive operation from which all other operations on data structures may be constructed.
+ * A primitive operation from which all other operations on data structures may be
+ * constructed.
  *
  * @author Richard Sundqvist
  *
@@ -21,7 +22,8 @@ public abstract class OP_ReadWrite extends Operation {
     private static final long serialVersionUID = Const.VERSION_NUMBER;
 
     /**
-     * Create a new ReadWrite operation. Note that you must set the target, source and value.
+     * Create a new ReadWrite operation. Note that you must set the target, source and
+     * value.
      *
      * @param operation
      *            The name of the operation. Should be "read" or "write".
@@ -36,8 +38,8 @@ public abstract class OP_ReadWrite extends Operation {
     }
 
     /**
-     * Set the target variable for this ReadWrite operation. The identifier of the variable should
-     * be previously declared in the header.
+     * Set the target variable for this ReadWrite operation. The identifier of the
+     * variable should be previously declared in the header.
      *
      * @param target
      *            The target variable for this ReadWrite operation.
@@ -47,8 +49,8 @@ public abstract class OP_ReadWrite extends Operation {
     }
 
     /**
-     * Set the source variable for this ReadWrite operation. The identifier of the variable should
-     * be previously declared in the header.
+     * Set the source variable for this ReadWrite operation. The identifier of the
+     * variable should be previously declared in the header.
      *
      * @param source
      *            The source variable for this ReadWrite operation.
@@ -58,8 +60,8 @@ public abstract class OP_ReadWrite extends Operation {
     }
 
     /**
-     * Set the value(s) which were ReadWrite from {@code source}. This should be the value of
-     * {@code target} and the specified index after operation execution, if applicable.
+     * Set the value(s) which were ReadWrite from {@code source}. This should be the value
+     * of {@code target} and the specified index after operation execution, if applicable.
      *
      * @param value
      *            Set the value(s) which were ReadWrite from {@code source}.
@@ -68,7 +70,8 @@ public abstract class OP_ReadWrite extends Operation {
         operationBody.put(Key.value, value);
     }
 
-    @Override public String toString () {
+    @Override
+    public String toString () {
         Locator source = getSource();
         Locator target = getTarget();
         String sourceStr;
