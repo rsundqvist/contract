@@ -34,7 +34,7 @@ public class IndependentElement extends Array {
      * @param visual
      *            The preferred visual style of the IndependentElement.
      */
-    public IndependentElement (String identifier, RawType.AbstractType abstractType, VisualType visual,
+    public IndependentElement (String identifier, AbstractType abstractType, VisualType visual,
             Map<String, Object> attributes) {
         super(identifier, RawType.independentElement, abstractType, visual, attributes);
     }

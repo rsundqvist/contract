@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import contract.assets.Const;
+import contract.datastructure.AbstractType;
 import contract.datastructure.RawType;
 import contract.datastructure.VisualType;
 
@@ -32,7 +33,7 @@ public class AnnotatedVariable implements Serializable {
      * variable could have the {@code rawType} array but the {@code abstractType}
      * binaryTree.
      */
-    public RawType.AbstractType      abstractType;
+    public AbstractType      abstractType;
     /**
      * The preferred graphical representation for this variable, such as BarChart. <br>
      * <br>
@@ -59,7 +60,7 @@ public class AnnotatedVariable implements Serializable {
      * @param attributes
      *            the map of attributes for this AnnotatedVariable.
      */
-    public AnnotatedVariable (String identifier, RawType rawType, RawType.AbstractType abstractType, VisualType visual,
+    public AnnotatedVariable (String identifier, RawType rawType, AbstractType abstractType, VisualType visual,
             Map<String, Object> attributes) {
         if (identifier == null) {
             throw new NullPointerException("Identifier may not be null!");

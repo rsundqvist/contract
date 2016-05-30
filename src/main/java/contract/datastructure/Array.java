@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import contract.assets.Const;
-import contract.datastructure.RawType.AbstractType;
 import contract.json.Locator;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
@@ -40,7 +39,7 @@ public class Array extends DataStructure {
      * @param attributes
      *            The attributes for this Array.
      */
-    public Array (String identifier, RawType.AbstractType abstractType, VisualType visual,
+    public Array (String identifier, AbstractType abstractType, VisualType visual,
             Map<String, Object> attributes) {
         super(identifier, RawType.array, abstractType, visual, attributes);
         size = getSize();

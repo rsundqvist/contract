@@ -52,8 +52,34 @@ public class OP_Message extends Operation {
         return (String) operationBody.get(Key.value);
     }
 
+    /**
+     * Set the halt parameter for this Message. If true, automatic execution will stop
+     * once the operation has been run.
+     * 
+     * @param halt
+     *            The new halt setting.
+     */
+    public void setHalt (boolean halt) {
+        operationBody.put(Key.halt, halt);
+    }
+
+    /**
+     * Returns the halt value for this Message.
+     * 
+     * @return The halt value for this Message.
+     */
+    public boolean getHalt () {
+        Object halt = operationBody.get(Key.halt);
+
+        if (halt != null && halt instanceof Boolean) {
+            return (boolean) halt;
+        }
+
+        return false;
+    }
+
     @Override
     public String toString () {
-        return "MESSAGE: \"" + getValue() + "\"";
+        return getHalt() ? "HALT" : "MESSAGE" + ": \"" + getValue() + "\"";
     }
 }

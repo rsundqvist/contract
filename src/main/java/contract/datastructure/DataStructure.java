@@ -97,7 +97,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * @param attributes
      *            the map of attributes for this AnnotatedVariable.
      */
-    public DataStructure (String identifier, RawType rawType, RawType.AbstractType abstractType, VisualType visual,
+    public DataStructure (String identifier, RawType rawType, AbstractType abstractType, VisualType visual,
             Map<String, Object> attributes) {
         super(identifier, rawType, abstractType, visual, attributes);
     }
