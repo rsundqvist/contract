@@ -29,12 +29,11 @@ public abstract class OP_ReadWrite extends Operation {
      *            The name of the operation. Should be "read" or "write".
      */
     public OP_ReadWrite (OperationType operation) {
-        super(operation, new HashMap<Key, Object>(), null, -1, -1, -1, -1);
+        super(operation, new HashMap<Key, Object>(), null, null);
     }
 
-    public OP_ReadWrite (OperationType operation, String source, int beginLine, int endLine, int beginColumn,
-            int endColumn) {
-        super(operation, new HashMap<Key, Object>(), source, beginLine, endLine, beginColumn, endColumn);
+    public OP_ReadWrite (OperationType operation, String source, int[] sourceRows) {
+        super(operation, new HashMap<Key, Object>(), source, sourceRows);
     }
 
     /**
@@ -45,7 +44,7 @@ public abstract class OP_ReadWrite extends Operation {
      *            The target variable for this ReadWrite operation.
      */
     public void setTarget (Locator target) {
-        operationBody.put(Key.target, target);
+        body.put(Key.target, target);
     }
 
     /**
@@ -56,7 +55,7 @@ public abstract class OP_ReadWrite extends Operation {
      *            The source variable for this ReadWrite operation.
      */
     public void setSource (Locator source) {
-        operationBody.put(Key.source, source);
+        body.put(Key.source, source);
     }
 
     /**
@@ -67,7 +66,7 @@ public abstract class OP_ReadWrite extends Operation {
      *            Set the value(s) which were ReadWrite from {@code source}.
      */
     public void setValue (double[] value) {
-        operationBody.put(Key.value, value);
+        body.put(Key.value, value);
     }
 
     @Override
@@ -102,14 +101,14 @@ public abstract class OP_ReadWrite extends Operation {
     }
 
     public Locator getTarget () {
-        return (Locator) operationBody.get(Key.target);
+        return (Locator) body.get(Key.target);
     }
 
     public Locator getSource () {
-        return (Locator) operationBody.get(Key.source);
+        return (Locator) body.get(Key.source);
     }
 
     public double[] getValue () {
-        return (double[]) operationBody.get(Key.value);
+        return (double[]) body.get(Key.value);
     }
 }

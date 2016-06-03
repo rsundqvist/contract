@@ -88,8 +88,8 @@ public abstract class OpParser {
             System.err.println("Operation must be \"read\" or \"write\". Got: " + op.operation);
             return null;
         }
-        op_rw.setSource(unpackArrayVariable(op.operationBody.get(Key.source)));
-        op_rw.setTarget(unpackArrayVariable(op.operationBody.get(Key.target)));
+        op_rw.setSource(unpackArrayVariable(op.body.get(Key.source)));
+        op_rw.setTarget(unpackArrayVariable(op.body.get(Key.target)));
         op_rw.setValue(parseValue(op));
         copySourceInfo(op, op_rw);
         return op_rw;
@@ -97,34 +97,28 @@ public abstract class OpParser {
 
     public static OP_ToggleScope parseRemove (Operation op) {
         OP_ToggleScope op_remove = new OP_ToggleScope();
-        op_remove.setTarget(unpackArrayVariable(op.operationBody.get(Key.target)));
+        op_remove.setTarget(unpackArrayVariable(op.body.get(Key.target)));
         copySourceInfo(op, op_remove);
         return op_remove;
     }
 
     private static void copySourceInfo (Operation from, Operation to) {
-        if (from.source == null) {
-            return;
-        }
         to.source = from.source;
-        to.beginLine = from.beginLine;
-        to.endLine = from.endLine;
-        to.beginColumn = from.beginColumn;
-        to.endColumn = from.endColumn;
+        to.sourceRows = from.sourceRows;
     }
 
     private static Operation parseSwap (Operation op) {
         OP_Swap op_swap = new OP_Swap();
-        op_swap.setVar1(unpackArrayVariable(op.operationBody.get(Key.var1)));
-        op_swap.setVar2(unpackArrayVariable(op.operationBody.get(Key.var2)));
-        op_swap.setValues(ensureDoubleArray(op.operationBody.get(Key.value)));
+        op_swap.setVar1(unpackArrayVariable(op.body.get(Key.var1)));
+        op_swap.setVar2(unpackArrayVariable(op.body.get(Key.var2)));
+        op_swap.setValues(ensureDoubleArray(op.body.get(Key.value)));
         copySourceInfo(op, op_swap);
         return op_swap;
     }
 
     private static Operation parseMessage (Operation op) {
         OP_Message op_message = new OP_Message();
-        op_message.setMessage((String) op.operationBody.get(Key.value));
+        op_message.setMessage((String) op.body.get(Key.value));
         copySourceInfo(op, op_message);
         return op_message;
     }
@@ -171,7 +165,7 @@ public abstract class OpParser {
     // }
 
     private static double[] parseValue (Operation op) {
-        return ensureDoubleArray(op.operationBody.get(Key.value));
+        return ensureDoubleArray(op.body.get(Key.value));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

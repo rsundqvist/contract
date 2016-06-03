@@ -1,11 +1,9 @@
 package contract.operation;
 
-import java.util.HashMap;
 import java.util.List;
 
 import contract.assets.Const;
 import contract.json.Locator;
-import contract.json.Operation;
 
 /**
  * Create a new Swap operation, shifting the values of {@code var1} and {@code var2}.
@@ -21,7 +19,7 @@ public class OP_Swap extends HighLevelOperation {
      * Create a new Swap operation. Note that you must set var1, var2, and value.
      */
     public OP_Swap () {
-        super(OperationType.swap, new HashMap<Key, Object>(), null, -1, -1, -1, -1);
+        super(OperationType.swap, null, null);
     }
 
     /**
@@ -32,7 +30,7 @@ public class OP_Swap extends HighLevelOperation {
      *            Variable 1 for this Swap operation.
      */
     public void setVar1 (Locator var1) {
-        operationBody.put(Key.var1, var1);
+        body.put(Key.var1, var1);
     }
 
     /**
@@ -43,7 +41,7 @@ public class OP_Swap extends HighLevelOperation {
      *            Variable 2 for this Swap operation.
      */
     public void setVar2 (Locator var2) {
-        operationBody.put(Key.var2, var2);
+        body.put(Key.var2, var2);
     }
 
     /**
@@ -54,19 +52,19 @@ public class OP_Swap extends HighLevelOperation {
      *            The values in var1 and var2 after execution.
      */
     public void setValues (double[] values) {
-        operationBody.put(Key.value, values);
+        body.put(Key.value, values);
     }
 
     public Locator getVar1 () {
-        return (Locator) operationBody.get(Key.var1);
+        return (Locator) body.get(Key.var1);
     }
 
     public Locator getVar2 () {
-        return (Locator) operationBody.get(Key.var2);
+        return (Locator) body.get(Key.var2);
     }
 
     public double[] getValue () {
-        return (double[]) operationBody.get(Key.value);
+        return (double[]) body.get(Key.value);
     }
 
     @Override
@@ -83,10 +81,11 @@ public class OP_Swap extends HighLevelOperation {
      *         Swap operation, null otherwise.
      */
     @Override
-    public Operation consolidate (List<OP_ReadWrite> rwList) {
+    public OP_Swap consolidate (List<OP_ReadWrite> rwList) {
         if (rwList.size() != OperationType.swap.numAtomicOperations) {
             throw new IllegalArgumentException("Swap operations are composed of 3 read/write operations.");
         }
+
         OP_ReadWrite rw0 = rwList.get(0);
         OP_ReadWrite rw1 = rwList.get(1);
         OP_ReadWrite rw2 = rwList.get(2);
@@ -117,6 +116,8 @@ public class OP_Swap extends HighLevelOperation {
         op_swap.setVar1(var1);
         op_swap.setVar2(var2);
         op_swap.setValues(new double[] { rw1.getValue() [0], rw0.getValue() [0] });
+        op_swap.atomicOperations.addAll(rwList);
+        // TODO: Source origin.
         return op_swap;
     }
 

@@ -22,7 +22,7 @@ public class OP_ToggleScope extends OP_ReadWrite {
      */
     @Override
     public void setTarget (Locator target) {
-        operationBody.put(Key.target, target);
+        body.put(Key.target, target);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class OP_ToggleScope extends OP_ReadWrite {
 
     @Override
     public Locator getTarget () {
-        return (Locator) operationBody.get(Key.target);
+        return (Locator) body.get(Key.target);
     }
 }

@@ -25,15 +25,15 @@ public class Operation implements Serializable {
      * A map containing the identifier of the field (such as "target" or "value") and the
      * data they contained.
      */
-    public final HashMap<Key, Object> operationBody;
+    public final HashMap<Key, Object> body;
     /**
      * The name of the source file this Operation originates from.
      */
     public String                     source;
-    public int                        beginLine;
-    public int                        endLine;
-    public int                        beginColumn;
-    public int                        endColumn;
+    /**
+     * The row(s) the operation originates from.
+     */
+    public int[]                      sourceRows;
 
     /**
      * /** Create a new Operation.
@@ -41,29 +41,17 @@ public class Operation implements Serializable {
      * @param operation
      *            The literal name of the operation, such as "init" (initialize) or
      *            "read".
-     * @param operationBody
+     * @param body
      *            A map containing the identifier of the field (such as "destination" or
      *            "value") and the data they contained.
      * @param source
      *            The source file this operation originates from.
-     * @param beginLine
-     *            The first line this operation originates from.
-     * @param endLine
-     *            The last line this operation originates from.
-     * @param beginColumn
-     *            The first column this operation originates from.
-     * @param endColumn
-     *            The last line column operation originates from.
      */
-    public Operation (OperationType operation, HashMap<Key, Object> operationBody, String source, int beginLine,
-            int endLine, int beginColumn, int endColumn) {
+    public Operation (OperationType operation, HashMap<Key, Object> body, String source, int[] sourceRows) {
         this.operation = operation;
-        this.operationBody = operationBody;
+        this.body = body;
         this.source = source;
-        this.beginLine = beginLine;
-        this.endLine = endLine;
-        this.beginColumn = beginColumn;
-        this.endColumn = beginColumn;
+        this.sourceRows = sourceRows;
     }
 
     public String toSimpleString () {
@@ -72,6 +60,6 @@ public class Operation implements Serializable {
 
     @Override
     public String toString () {
-        return operationBody == null ? "null" : operationBody.toString();
+        return body == null ? "null" : body.toString();
     }
 }

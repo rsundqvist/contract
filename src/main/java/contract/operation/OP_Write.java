@@ -21,8 +21,8 @@ public class OP_Write extends OP_ReadWrite {
         super(OPERATION);
     }
 
-    public OP_Write (String source, int beginLine, int endLine, int beginColumn, int endColumn) {
-        super(OPERATION, source, beginLine, endLine, beginColumn, endColumn);
+    public OP_Write (String source, int[] sourcerOWS) {
+        super(OPERATION, source, sourcerOWS);
     }
 
     /**
@@ -37,7 +37,7 @@ public class OP_Write extends OP_ReadWrite {
         if (target == null) {
             System.err.println("Target null in Write operation!");
         }
-        operationBody.put(Key.target, target);
+        body.put(Key.target, target);
     }
 
     /**
@@ -49,7 +49,7 @@ public class OP_Write extends OP_ReadWrite {
      */
     @Override
     public void setSource (Locator source) {
-        operationBody.put(Key.source, source);
+        body.put(Key.source, source);
     }
 
     /**
@@ -61,21 +61,21 @@ public class OP_Write extends OP_ReadWrite {
      */
     @Override
     public void setValue (double[] value) {
-        operationBody.put(Key.value, value);
+        body.put(Key.value, value);
     }
 
     @Override
     public Locator getTarget () {
-        return (Locator) operationBody.get(Key.target);
+        return (Locator) body.get(Key.target);
     }
 
     @Override
     public Locator getSource () {
-        return (Locator) operationBody.get(Key.source);
+        return (Locator) body.get(Key.source);
     }
 
     @Override
     public double[] getValue () {
-        return (double[]) operationBody.get(Key.value);
+        return (double[]) body.get(Key.value);
     }
 }

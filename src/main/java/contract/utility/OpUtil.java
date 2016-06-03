@@ -20,7 +20,7 @@ public abstract class OpUtil {
         case target:
         case var1:
         case var2:
-            ans = (Locator) op.operationBody.get(locatorKey);
+            ans = (Locator) op.body.get(locatorKey);
         default:
             break;
         }
@@ -29,23 +29,23 @@ public abstract class OpUtil {
     }
 
     public static String getIdentifier (Operation op) {
-        return (String) op.operationBody.get(Key.identifier);
+        return (String) op.body.get(Key.identifier);
     }
 
     public static double[] getValue (Operation op) {
-        return (double[]) op.operationBody.get(Key.value);
+        return (double[]) op.body.get(Key.value);
     }
 
     public static int[] getIndex (Operation op) {
-        return (int[]) op.operationBody.get(Key.index);
+        return (int[]) op.body.get(Key.index);
     }
 
     public static int[] getSize (Operation op) {
-        return (int[]) op.operationBody.get(Key.size);
+        return (int[]) op.body.get(Key.size);
     }
 
     public static OperationType getOperationTyope (Operation op) {
-        return (OperationType) op.operationBody.get(Key.operation);
+        return (OperationType) op.body.get(Key.operation);
     }
 
     /**

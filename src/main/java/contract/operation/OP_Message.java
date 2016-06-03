@@ -21,7 +21,7 @@ public class OP_Message extends Operation {
      * initial values.
      */
     public OP_Message () {
-        super(OPERATION, new HashMap<Key, Object>(), null, -1, -1, -1, -1);
+        super(OPERATION, new HashMap<Key, Object>(), null, null);
     }
 
     /**
@@ -45,11 +45,11 @@ public class OP_Message extends Operation {
      *            The value(s) with which to initialize this variable.
      */
     public void setValue (String value) {
-        operationBody.put(Key.value, value);
+        body.put(Key.value, value);
     }
 
     public String getValue () {
-        return (String) operationBody.get(Key.value);
+        return (String) body.get(Key.value);
     }
 
     /**
@@ -60,7 +60,7 @@ public class OP_Message extends Operation {
      *            The new halt setting.
      */
     public void setHalt (boolean halt) {
-        operationBody.put(Key.halt, halt);
+        body.put(Key.halt, halt);
     }
 
     /**
@@ -69,7 +69,7 @@ public class OP_Message extends Operation {
      * @return The halt value for this Message.
      */
     public boolean getHalt () {
-        Object halt = operationBody.get(Key.halt);
+        Object halt = body.get(Key.halt);
 
         if (halt != null && halt instanceof Boolean) {
             return (boolean) halt;
