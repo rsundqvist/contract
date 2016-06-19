@@ -77,26 +77,26 @@ public abstract class OpUtil {
     public static void guessSource (HighLevelOperation hlo) {
         List<OP_ReadWrite> rwList = hlo.atomicOperations;
 
-        if (rwList.isEmpty()) {
-            System.err.println("Error in OpUtil.guessSource(): rwList is empty.");
+        if (rwList == null || rwList.isEmpty()) {
+            System.err.println("Error in OpUtil.guessSource(): Bad rwList: " + rwList);
             return;
         }
 
         String source = rwList.get(0).source;
         if (source == null) {
-            System.err.println("Error in OpUtil.guessSource(): source is null");
+            System.err.println("Error in OpUtil.guessSource(): Bad source: null");
             return;
         }
 
         int[] firstOpLines = rwList.get(0).sourceRows;
         if (firstOpLines == null || firstOpLines.length == 0) {
-            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows found: " + firstOpLines);
+            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows: " + firstOpLines);
             return;
         }
 
         int[] lastOpLines = rwList.get(rwList.size() - 1).sourceRows;
         if (lastOpLines == null || lastOpLines.length == 0) {
-            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows found: " + lastOpLines);
+            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows: " + lastOpLines);
             return;
         }
 
