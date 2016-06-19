@@ -89,16 +89,23 @@ public abstract class OpUtil {
         }
 
         int[] firstOpLines = rwList.get(0).sourceRows;
+        if (firstOpLines == null || firstOpLines.length == 0) {
+            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows found: " + firstOpLines);
+            return;
+        }
+
         int[] lastOpLines = rwList.get(rwList.size() - 1).sourceRows;
-        if (firstOpLines == null || lastOpLines == null
-                || firstOpLines.length == 0 || lastOpLines.length == 0) {
-            System.err.println("Error in OpUtil.guessSource(): Bad sourceRow found.");
+        if (lastOpLines == null || lastOpLines.length == 0) {
+            System.err.println("Error in OpUtil.guessSource(): Bad sourceRows found: " + lastOpLines);
             return;
         }
 
         int start = firstOpLines[0];
         int end = lastOpLines[lastOpLines.length - 1];
 
-        int[] sourceRow = new int[]{start, end};
+        int[] sourceRows = new int[]{start, end};
+
+        hlo.source = source;
+        hlo.sourceRows = sourceRows;
     }
 }
