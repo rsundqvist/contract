@@ -1,9 +1,10 @@
 package contract.operation;
 
-import java.util.List;
-
 import contract.assets.Const;
 import contract.json.Locator;
+import contract.utility.OpUtil;
+
+import java.util.List;
 
 /**
  * Create a new Swap operation, shifting the values of {@code var1} and {@code var2}.
@@ -26,8 +27,7 @@ public class OP_Swap extends HighLevelOperation {
      * Set var1 for this Swap operation. The identifier of the variable should be
      * previously declared in the header.
      *
-     * @param var1
-     *            Variable 1 for this Swap operation.
+     * @param var1 Variable 1 for this Swap operation.
      */
     public void setVar1 (Locator var1) {
         body.put(Key.var1, var1);
@@ -37,8 +37,7 @@ public class OP_Swap extends HighLevelOperation {
      * Set var2 for this Swap operation. The identifier of the variable should be
      * previously declared in the header.
      *
-     * @param var2
-     *            Variable 2 for this Swap operation.
+     * @param var2 Variable 2 for this Swap operation.
      */
     public void setVar2 (Locator var2) {
         body.put(Key.var2, var2);
@@ -48,8 +47,7 @@ public class OP_Swap extends HighLevelOperation {
      * The values contained at var1 and var2 respectively, AFTER this Swap operation has
      * been executed.
      *
-     * @param values
-     *            The values in var1 and var2 after execution.
+     * @param values The values in var1 and var2 after execution.
      */
     public void setValues (double[] values) {
         body.put(Key.value, values);
@@ -75,10 +73,9 @@ public class OP_Swap extends HighLevelOperation {
     /**
      * Attempt to create a Swap operation from 3 read/write operations.
      *
-     * @param rwList
-     *            The list of 3 read/write operations to test.
+     * @param rwList The list of 3 read/write operations to test.
      * @return A new Swap operation if the given testSet is a valid decomposition of a
-     *         Swap operation, null otherwise.
+     * Swap operation, null otherwise.
      */
     @Override
     public OP_Swap consolidate (List<OP_ReadWrite> rwList) {
@@ -115,9 +112,9 @@ public class OP_Swap extends HighLevelOperation {
         OP_Swap op_swap = new OP_Swap();
         op_swap.setVar1(var1);
         op_swap.setVar2(var2);
-        op_swap.setValues(new double[] { rw1.getValue() [0], rw0.getValue() [0] });
+        op_swap.setValues(new double[]{rw1.getValue()[0], rw0.getValue()[0]});
         op_swap.atomicOperations.addAll(rwList);
-        // TODO: Source origin.
+        OpUtil.guessSource(op_swap);
         return op_swap;
     }
 
