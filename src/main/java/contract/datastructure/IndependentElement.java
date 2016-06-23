@@ -1,7 +1,5 @@
 package contract.datastructure;
 
-import java.util.Map;
-
 import contract.assets.Const;
 import contract.assets.Tools;
 import contract.json.Locator;
@@ -10,12 +8,13 @@ import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
 import contract.operation.OperationType;
 
+import java.util.Map;
+
 /**
  * An independent variable holding a single element. May for example be used as a
  * temporary variable when performing a swap.
  *
  * @author Richard Sundqvist
- *
  */
 public class IndependentElement extends Array {
 
@@ -27,23 +26,19 @@ public class IndependentElement extends Array {
     /**
      * Create a new IndependentElement.
      *
-     * @param identifier
-     *            The identifier for this IndependentElement.
-     * @param abstractType
-     *            The <b>raw</b> type of the element held by this IndependentElement.
-     * @param visual
-     *            The preferred visual style of the IndependentElement.
+     * @param identifier The identifier for this IndependentElement.
+     * @param abstractType The <b>raw</b> type of the element held by this IndependentElement.
+     * @param visual The preferred visual style of the IndependentElement.
      */
     public IndependentElement (String identifier, AbstractType abstractType, VisualType visual,
-            Map<String, Object> attributes) {
+                               Map<String, Object> attributes) {
         super(identifier, RawType.independentElement, abstractType, visual, attributes);
     }
 
     /**
      * Set the element held by this IndependentElement.
      *
-     * @param newElement
-     *            The new element to be held by this IndependentElement.
+     * @param newElement The new element to be held by this IndependentElement.
      */
     public void setElement (Element newElement) {
         elements.clear();
@@ -53,11 +48,10 @@ public class IndependentElement extends Array {
     /**
      * Initialize an element with value 0.
      *
-     * @param value
-     *            The value to initialize with.
+     * @param value The value to initialize with.
      */
     public void initElement (double value) {
-        Element init = new IndexedElement(value, new int[] { 0 });
+        Element init = new IndexedElement(value, new int[]{0});
         elements.clear();
         elements.add(init);
     }
@@ -91,12 +85,12 @@ public class IndependentElement extends Array {
     protected void executeSwap (OP_Swap op) {
         Element e = elements.get(0);
         if (op.getVar1().identifier.equals(identifier)) {
-            e.setValue(op.getValue() [0]);
+            e.setValue(op.getValue()[0]);
             e.count(OperationType.swap);
             oc.count(OperationType.swap);
             return;
         } else if (op.getVar2().identifier.equals(identifier)) {
-            e.setValue(op.getValue() [1]);
+            e.setValue(op.getValue()[1]);
             e.count(OperationType.swap);
             oc.count(OperationType.swap);
             return;
@@ -106,11 +100,11 @@ public class IndependentElement extends Array {
     @Override
     protected void executeRW (OP_ReadWrite op) {
         if (elements.isEmpty()) {
-            initElement(op.getValue() [0]);
+            initElement(op.getValue()[0]);
         }
         Element e = elements.get(0);
         if (op.getTarget() != null && op.getTarget().identifier.equals(identifier)) {
-            e.setValue(op.getValue() [0]);
+            e.setValue(op.getValue()[0]);
             modifiedElements.add(e);
             e.count(OperationType.write);
             oc.count(OperationType.write);

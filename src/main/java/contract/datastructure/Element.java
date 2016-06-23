@@ -14,7 +14,6 @@ import javafx.scene.paint.Paint;
  * An element in a data structure.
  *
  * @author Richard Sundqvist
- *
  */
 public abstract class Element implements OperationCounterHaver {
 
@@ -22,20 +21,20 @@ public abstract class Element implements OperationCounterHaver {
      * String property for this element. Will be updated when the string <b>or</b> double
      * value is changed.
      */
-    public final SimpleStringProperty        stringProperty = new SimpleStringProperty();
+    public final SimpleStringProperty stringProperty = new SimpleStringProperty();
     /**
      * Double property for this element. Updated whenever the value is changed.
      */
-    public final SimpleDoubleProperty        numProperty    = new SimpleDoubleProperty();
+    public final SimpleDoubleProperty numProperty = new SimpleDoubleProperty();
     /**
      * Fill property for this element. Updated when the {@link #count(Operation)} method
      * is called.
      */
-    public final SimpleObjectProperty<Paint> fillProperty   = new SimpleObjectProperty<Paint>();
+    public final SimpleObjectProperty<Paint> fillProperty = new SimpleObjectProperty<Paint>();
     /**
      * Counter for operations performed on the element.
      */
-    protected final OperationCounter         oc             = new OperationCounter();
+    protected final OperationCounter oc = new OperationCounter();
 
     /*
      * Value and fill
@@ -48,25 +47,27 @@ public abstract class Element implements OperationCounterHaver {
      * {@link Double#NEGATIVE_INFINITY} indicates that the value has never been set using
      * {@link #setValue(double)}.
      */
-    private double                           prevNumValue   = Double.NEGATIVE_INFINITY;
+    private double prevNumValue = Double.NEGATIVE_INFINITY;
     /**
      * Numeric value for this element.
      */
-    private double                           numValue       = Double.NaN;
+    private double numValue = Double.NaN;
     /**
      * String value for this element. Useful when representing objects.
      */
-    private String                           stringValue    = null;
+    private String stringValue = null;
     /**
      * The paint for this element.
      */
-    private Paint                            paint          = null;
+    private Paint paint = null;
 
     /**
      * Constructs a new Element.
      */
     public Element () {
-    };
+    }
+
+    ;
 
     /*
      * Setters and Getters
@@ -93,8 +94,7 @@ public abstract class Element implements OperationCounterHaver {
     /**
      * Set the numeric value held by this Element.
      *
-     * @param newValue
-     *            the new value for this Element.
+     * @param newValue the new value for this Element.
      */
     public final void setValue (double newValue) {
         prevNumValue = numValue;
@@ -113,7 +113,6 @@ public abstract class Element implements OperationCounterHaver {
 
     /**
      * Set the display value held by this Element.
-     *
      */
     public final void setValue (String newValue) {
         if (stringValue.equals(newValue) == false) {
@@ -134,8 +133,7 @@ public abstract class Element implements OperationCounterHaver {
     /**
      * Indicate to the element that it it has been involved in an operation.
      *
-     * @param op
-     *            The operation type which was applied.
+     * @param op The operation type which was applied.
      */
     public final void count (OperationType ot) {
         oc.count(ot);
@@ -148,8 +146,7 @@ public abstract class Element implements OperationCounterHaver {
     /**
      * Set the Paint for this element.
      *
-     * @param c
-     *            The paint to use
+     * @param c The paint to use
      */
     public final void setColor (Paint c) {
         paint = c;

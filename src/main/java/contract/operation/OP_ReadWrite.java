@@ -1,18 +1,17 @@
 package contract.operation;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
 import contract.assets.Const;
 import contract.json.Locator;
 import contract.json.Operation;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * A primitive operation from which all other operations on data structures may be
  * constructed.
  *
  * @author Richard Sundqvist
- *
  */
 public abstract class OP_ReadWrite extends Operation {
 
@@ -25,8 +24,7 @@ public abstract class OP_ReadWrite extends Operation {
      * Create a new ReadWrite operation. Note that you must set the target, source and
      * value.
      *
-     * @param operation
-     *            The name of the operation. Should be "read" or "write".
+     * @param operation The name of the operation. Should be "read" or "write".
      */
     public OP_ReadWrite (OperationType operation) {
         super(operation, new HashMap<Key, Object>(), null, null);
@@ -40,8 +38,7 @@ public abstract class OP_ReadWrite extends Operation {
      * Set the target variable for this ReadWrite operation. The identifier of the
      * variable should be previously declared in the header.
      *
-     * @param target
-     *            The target variable for this ReadWrite operation.
+     * @param target The target variable for this ReadWrite operation.
      */
     public void setTarget (Locator target) {
         body.put(Key.target, target);
@@ -51,8 +48,7 @@ public abstract class OP_ReadWrite extends Operation {
      * Set the source variable for this ReadWrite operation. The identifier of the
      * variable should be previously declared in the header.
      *
-     * @param source
-     *            The source variable for this ReadWrite operation.
+     * @param source The source variable for this ReadWrite operation.
      */
     public void setSource (Locator source) {
         body.put(Key.source, source);
@@ -62,8 +58,7 @@ public abstract class OP_ReadWrite extends Operation {
      * Set the value(s) which were ReadWrite from {@code source}. This should be the value
      * of {@code target} and the specified index after operation execution, if applicable.
      *
-     * @param value
-     *            Set the value(s) which were ReadWrite from {@code source}.
+     * @param value Set the value(s) which were ReadWrite from {@code source}.
      */
     public void setValue (double[] value) {
         body.put(Key.value, value);

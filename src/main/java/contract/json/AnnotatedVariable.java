@@ -1,13 +1,13 @@
 package contract.json;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 import contract.assets.Const;
 import contract.datastructure.AbstractType;
 import contract.datastructure.RawType;
 import contract.datastructure.VisualType;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The declaration for an annotated (observed) variable in source.
@@ -17,30 +17,30 @@ public class AnnotatedVariable implements Serializable {
     /**
      * Version number for this class.
      */
-    private static final long        serialVersionUID = Const.VERSION_NUMBER;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
     /**
      * The identifier for this variable. For example, the indentifier for the variable
      * created by the line "{@code int myVar = 1337;}" would be "{@code myVar}".
      */
-    public final String              identifier;
+    public final String identifier;
     /**
      * The basic data structure for this variable. May be an array or something more
      * complicated like a tree or linked list.
      */
-    public final RawType             rawType;
+    public final RawType rawType;
     /**
      * The type of data structure this variable logically represents. For example, a
      * variable could have the {@code rawType} array but the {@code abstractType}
      * binaryTree.
      */
-    public AbstractType      abstractType;
+    public AbstractType abstractType;
     /**
      * The preferred graphical representation for this variable, such as BarChart. <br>
      * <br>
      * <b>Note</b>: setting this variable using the setVisual() is recommended as it may
      * be observed.
      */
-    public VisualType                visual;
+    public VisualType visual;
     /**
      * A map of attributes and their values for this variable, such as maximum size.
      */
@@ -49,19 +49,14 @@ public class AnnotatedVariable implements Serializable {
     /**
      * Creates a new AnnotatedVariable.
      *
-     * @param identifier
-     *            The identifier for this variable.
-     * @param rawType
-     *            The basic data structure for this variable.
-     * @param abstractType
-     *            The type of data structure this variable logically represents.
-     * @param visual
-     *            The preferred graphical representation for this variable.
-     * @param attributes
-     *            the map of attributes for this AnnotatedVariable.
+     * @param identifier The identifier for this variable.
+     * @param rawType The basic data structure for this variable.
+     * @param abstractType The type of data structure this variable logically represents.
+     * @param visual The preferred graphical representation for this variable.
+     * @param attributes the map of attributes for this AnnotatedVariable.
      */
     public AnnotatedVariable (String identifier, RawType rawType, AbstractType abstractType, VisualType visual,
-            Map<String, Object> attributes) {
+                              Map<String, Object> attributes) {
         if (identifier == null) {
             throw new NullPointerException("Identifier may not be null!");
         }

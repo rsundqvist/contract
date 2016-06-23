@@ -1,10 +1,10 @@
 package contract.json;
 
-import java.io.Serializable;
-import java.util.Arrays;
-
 import contract.assets.Const;
 import contract.assets.Tools;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * A variable used by the {@code Operation} class.
@@ -20,21 +20,19 @@ public class Locator implements Serializable {
      * as keys in the {@code annotatedVariables} HashMap of the variables declared in the
      * header.
      */
-    public final String       identifier;
+    public final String identifier;
     /**
      * The index from which the fetch a value in the variable identified by
      * {@code identifier}.
      */
-    public final int[]        index;
+    public final int[] index;
 
     /**
      * Create a new Locator with a given identifier and index.
      *
-     * @param identifier
-     *            The identifier for this variable.
-     * @param index
-     *            The index from which the fetch a value in the variable identified by
-     *            {@code identifier}.
+     * @param identifier The identifier for this variable.
+     * @param index The index from which the fetch a value in the variable identified by
+     * {@code identifier}.
      */
     public Locator (String identifier, int[] index) {
         this.identifier = identifier;
@@ -61,8 +59,7 @@ public class Locator implements Serializable {
     /**
      * Compares the index only, ignoring identifier.
      *
-     * @param other
-     *            The other Locator to compare.
+     * @param other The other Locator to compare.
      * @return True if the index of this and other are equal, false otherwise.
      */
     public boolean indexEquals (Locator other) {
@@ -72,8 +69,7 @@ public class Locator implements Serializable {
     /**
      * Compares the index only, ignoring identifier.
      *
-     * @param other
-     *            The index to compare.
+     * @param other The index to compare.
      * @return True if the index of this and other are equal, false otherwise.
      */
     public boolean indexEquals (int[] other) {

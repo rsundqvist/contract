@@ -1,9 +1,9 @@
 package contract.operation;
 
-import java.util.HashMap;
-
 import contract.assets.Const;
 import contract.json.Operation;
+
+import java.util.HashMap;
 
 /**
  * Creates an operation to initialize an {@code AnnotatedVariable}.
@@ -13,8 +13,8 @@ public class OP_Message extends Operation {
     /**
      * Version number for this class.
      */
-    private static final long          serialVersionUID = Const.VERSION_NUMBER;
-    private static final OperationType OPERATION        = OperationType.message;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
+    private static final OperationType OPERATION = OperationType.message;
 
     /**
      * Creates a new Init operation. Note that you must set the target, maxSize and
@@ -27,8 +27,7 @@ public class OP_Message extends Operation {
     /**
      * Simply calls setValue().
      *
-     * @param message
-     *            The message to attach to this OP_Message.
+     * @param message The message to attach to this OP_Message.
      */
     public void setMessage (String message) {
         setValue(message);
@@ -41,8 +40,7 @@ public class OP_Message extends Operation {
     /**
      * Set the value(s) with which to initialize this variable.
      *
-     * @param value
-     *            The value(s) with which to initialize this variable.
+     * @param value The value(s) with which to initialize this variable.
      */
     public void setValue (String value) {
         body.put(Key.value, value);
@@ -55,9 +53,8 @@ public class OP_Message extends Operation {
     /**
      * Set the halt parameter for this Message. If true, automatic execution will stop
      * once the operation has been run.
-     * 
-     * @param halt
-     *            The new halt setting.
+     *
+     * @param halt The new halt setting.
      */
     public void setHalt (boolean halt) {
         body.put(Key.halt, halt);
@@ -65,7 +62,7 @@ public class OP_Message extends Operation {
 
     /**
      * Returns the halt value for this Message.
-     * 
+     *
      * @return The halt value for this Message.
      */
     public boolean getHalt () {

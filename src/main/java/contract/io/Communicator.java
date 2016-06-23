@@ -1,9 +1,9 @@
 package contract.io;
 
+import contract.json.Root;
+
 import java.io.Serializable;
 import java.util.List;
-
-import contract.json.Root;
 
 public interface Communicator {
     /**
@@ -23,8 +23,7 @@ public interface Communicator {
     /**
      * /** Send the given Wrapper to all everyone listening on the current channel.
      *
-     * @param outgoing
-     *            The Wrapper to send.
+     * @param outgoing The Wrapper to send.
      * @return True if message was sent, false otherwise.
      */
     public boolean sendWrapper (Root outgoing);
@@ -32,8 +31,7 @@ public interface Communicator {
     /**
      * Send all Wrappers to everyone listening on the current channel.
      *
-     * @param outgoing
-     *            The list of Wrappers to send.
+     * @param outgoing The list of Wrappers to send.
      * @return True if all wrappers were successfully sent.
      */
     public boolean sendWrappers (List<Root> outgoing);
@@ -47,8 +45,7 @@ public interface Communicator {
      * Send the given String to all everyone listening on the current channel. <br>
      * <b>NOTE:</b> JSONString must be a valid serialisation of a Wrapper.
      *
-     * @param JSONString
-     *            The JSON String to send.
+     * @param JSONString The JSON String to send.
      * @return True if the String was successfully sent. False otherwise.
      */
     public boolean sendString (String JSONString);
@@ -56,12 +53,12 @@ public interface Communicator {
     /*
      * Internal class
      */
+
     /**
      * Wrapper for messages sent and recevied by implementations of the Communicator
      * interface.
      *
      * @author Richard Sundqvist
-     *
      */
     @SuppressWarnings("serial")
     public class CommunicatorMessage implements Serializable {
@@ -69,17 +66,17 @@ public interface Communicator {
         /**
          * Message containing a Wrapper for variables and operations.
          */
-        public static final short WRAPPER                    = 0;
+        public static final short WRAPPER = 0;
         /**
          * Message containing a String on the JSON format, which may be deserialized into
          * a Wrapper.
          */
-        public static final short JSON                       = 1;
+        public static final short JSON = 1;
         /**
          * Sent when the Communicator starts to announce it's presence, triggering
          * information requests.
          */
-        public static final short HELLO                      = 10;
+        public static final short HELLO = 10;
         /**
          * Request for info about connected channel members.
          */
@@ -87,37 +84,34 @@ public interface Communicator {
         /**
          * Info about the sending member contained as a String in payload.
          */
-        public static final short CHECKING_IN                = 12;
+        public static final short CHECKING_IN = 12;
         /**
          * Request for info about connected channel members.
          */
-        public static final short FIRST_CONTACT              = 13;
+        public static final short FIRST_CONTACT = 13;
         /**
          * Info about the sending member contained as a String in payload.
          */
-        public static final short FIRST_CONTACT_ACK          = 14;
+        public static final short FIRST_CONTACT_ACK = 14;
         /**
          * They payload for this message. May be null.
          */
-        public final Object       payload;
+        public final Object payload;
         /**
          * The sender id for this message.
          */
-        public final int          senderId;
+        public final int senderId;
         /**
          * The message type for this message.
          */
-        public final short        messageType;
+        public final short messageType;
 
         /**
          * Construct a new MavserMessage.
          *
-         * @param payload
-         *            They payload for this message. May be null.
-         * @param senderId
-         *            The sender id for this message.
-         * @param messageType
-         *            The message type for this message.
+         * @param payload They payload for this message. May be null.
+         * @param senderId The sender id for this message.
+         * @param messageType The message type for this message.
          */
         public CommunicatorMessage (Object payload, int senderId, short messageType) {
             this.payload = payload;

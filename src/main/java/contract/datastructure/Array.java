@@ -1,14 +1,14 @@
 package contract.datastructure;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import contract.assets.Const;
 import contract.json.Locator;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
 import contract.operation.OperationType;
 import contract.utility.StructParser;
+
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * A representation of the Array data structure, using doubles as values.
@@ -20,27 +20,23 @@ public class Array extends DataStructure {
     /**
      * Version number for this class.
      */
-    private static final long        serialVersionUID = Const.VERSION_NUMBER;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
 
-    private transient int[]          size;
+    private transient int[] size;
     private transient MinMaxListener mmListener;
-    private transient double         min              = Double.MAX_VALUE;
-    private transient double         max              = Double.MIN_VALUE;
+    private transient double min = Double.MAX_VALUE;
+    private transient double max = Double.MIN_VALUE;
 
     /**
      * Construct a new Array with the given parameters.
      *
-     * @param identifier
-     *            The identifier for this Array.
-     * @param abstractType
-     *            The abstract type for this Array.
-     * @param visual
-     *            The preferred visual for this Array.
-     * @param attributes
-     *            The attributes for this Array.
+     * @param identifier The identifier for this Array.
+     * @param abstractType The abstract type for this Array.
+     * @param visual The preferred visual for this Array.
+     * @param attributes The attributes for this Array.
      */
     public Array (String identifier, AbstractType abstractType, VisualType visual,
-            Map<String, Object> attributes) {
+                  Map<String, Object> attributes) {
         super(identifier, RawType.array, abstractType, visual, attributes);
         size = getSize();
     }
@@ -49,27 +45,21 @@ public class Array extends DataStructure {
      * Construct a new Array with the given parameters. This constructor exists for use by
      * the IndependentElement structure.
      *
-     * @param identifier
-     *            The identifier for this Array.
-     * @param rawType
-     *            The rawType for this Array.
-     * @param abstractType
-     *            The abstract type for this Array.
-     * @param visual
-     *            The preferred visual for this Array.
-     * @param attributes
-     *            The attributes for this Array.
+     * @param identifier The identifier for this Array.
+     * @param rawType The rawType for this Array.
+     * @param abstractType The abstract type for this Array.
+     * @param visual The preferred visual for this Array.
+     * @param attributes The attributes for this Array.
      */
     protected Array (String identifier, RawType rawType, AbstractType abstractType, VisualType visual,
-            Map<String, Object> attributes) {
+                     Map<String, Object> attributes) {
         super(identifier, rawType, abstractType, visual, attributes);
     }
 
     /**
      * Set the listener for this Array.
      *
-     * @param listener
-     *            A MinMaxListener.
+     * @param listener A MinMaxListener.
      */
     public void setListener (MinMaxListener listener) {
         mmListener = listener;
@@ -99,13 +89,13 @@ public class Array extends DataStructure {
             size = getSize();
         }
         if (size == null) { // Use size of values as a last resort.
-            size = new int[] { values.length };
+            size = new int[]{values.length};
         }
 
         // Initialize specified by the values argument of the init operation.
         int linearIndex = 0;
         for (; linearIndex < values.length; linearIndex++) {
-            IndexedElement ae = new IndexedElement(values [linearIndex], getIndexInNDimensions(linearIndex, size));
+            IndexedElement ae = new IndexedElement(values[linearIndex], getIndexInNDimensions(linearIndex, size));
             ae.count(OperationType.write);
             putElement(ae);
         }
@@ -113,7 +103,7 @@ public class Array extends DataStructure {
         // Initialise elements without given values to 0.
         int linearTotal = 1;
         for (int i = 0; i < size.length; i++) {
-            linearTotal = linearTotal * size [i];
+            linearTotal = linearTotal * size[i];
         }
 
         for (linearIndex++; linearIndex < linearTotal; linearIndex++) {
@@ -125,11 +115,11 @@ public class Array extends DataStructure {
         modifiedElements.addAll(elements);
 
         // Dont spam the listener.
-        double initMin = values [0];
-        double initMax = values [0];
+        double initMin = values[0];
+        double initMax = values[0];
 
         for (int i = 1; i < values.length; i++) {
-            double val = values [i];
+            double val = values[i];
 
             if (val < initMin) {
                 initMin = val;
@@ -159,21 +149,21 @@ public class Array extends DataStructure {
         Locator var2 = op.getVar2();
         IndexedElement var1Element = this.getElement(var1);
         if (var1Element != null) {
-            var1Element.setValue(op.getValue() [0]);
+            var1Element.setValue(op.getValue()[0]);
             var1Element.count(OperationType.swap);
             modifiedElements.add(var1Element);
             inactiveElements.remove(var1Element);
             oc.count(OperationType.swap);
-            checkMinMaxChanged(op.getValue() [0]);
+            checkMinMaxChanged(op.getValue()[0]);
         }
         IndexedElement var2Element = this.getElement(var2);
         if (var2Element != null) {
-            var2Element.setValue(op.getValue() [1]);
+            var2Element.setValue(op.getValue()[1]);
             var2Element.count(OperationType.swap);
             modifiedElements.add(var2Element);
             inactiveElements.remove(var2Element);
             oc.count(OperationType.swap);
-            checkMinMaxChanged(op.getValue() [1]);
+            checkMinMaxChanged(op.getValue()[1]);
         }
     }
 
@@ -206,19 +196,19 @@ public class Array extends DataStructure {
                 modifiedElements.add(targetElement);
                 inactiveElements.remove(targetElement);
 
-                targetElement.setValue(value [0]);
+                targetElement.setValue(value[0]);
                 targetElement.count(OperationType.write);
-                checkMinMaxChanged(op.getValue() [0]);
+                checkMinMaxChanged(op.getValue()[0]);
             } else {
                 // Create the element
-                IndexedElement newElement = new IndexedElement(value [0],
-                        target.index == null ? new int[] { elements.size() } : target.index);
+                IndexedElement newElement = new IndexedElement(value[0],
+                        target.index == null ? new int[]{elements.size()} : target.index);
                 modifiedElements.add(newElement);
                 putElement(newElement);
 
                 newElement.count(OperationType.write);
                 setRepaintAll(true);
-                checkMinMaxChanged(op.getValue() [0]);
+                checkMinMaxChanged(op.getValue()[0]);
             }
         }
 
@@ -233,19 +223,19 @@ public class Array extends DataStructure {
                 modifiedElements.add(sourceElement);
                 inactiveElements.remove(sourceElement);
 
-                sourceElement.setValue(value [0]);
+                sourceElement.setValue(value[0]);
                 sourceElement.count(OperationType.read);
-                checkMinMaxChanged(op.getValue() [0]);
+                checkMinMaxChanged(op.getValue()[0]);
             } else {
                 // Create the element
-                IndexedElement newElement = new IndexedElement(value [0],
-                        source.index == null ? new int[] { elements.size() } : source.index);
+                IndexedElement newElement = new IndexedElement(value[0],
+                        source.index == null ? new int[]{elements.size()} : source.index);
                 modifiedElements.add(newElement);
                 putElement(newElement);
 
                 newElement.count(OperationType.read);
                 setRepaintAll(true);
-                checkMinMaxChanged(op.getValue() [0]);
+                checkMinMaxChanged(op.getValue()[0]);
             }
         }
     }
@@ -253,10 +243,8 @@ public class Array extends DataStructure {
     /**
      * Given a linear index, returns the index in N dimensions (dimeionSizes.length).
      *
-     * @param linearIndex
-     *            The linear index.
-     * @param dimensionSizes
-     *            Sizes of the dimensions.
+     * @param linearIndex The linear index.
+     * @param dimensionSizes Sizes of the dimensions.
      * @return The linear index translated to an index in N dimensions.
      */
     public int[] getIndexInNDimensions (int linearIndex, final int[] dimensionSizes) {
@@ -270,15 +258,15 @@ public class Array extends DataStructure {
          * matrix L by N by M: matrix[i][j][k] = array[i*(N*M) + j*M + k]
          */
         for (int currDim = 0; currDim < dimensionSizes.length; currDim++) {
-            index [currDim] = linearIndex;
+            index[currDim] = linearIndex;
             // Subtract others
             for (int otherDim = 0; otherDim < dimensionSizes.length; otherDim++) {
                 if (otherDim == currDim) {
                     continue; // Don't subtract self.
                 }
-                index [currDim] = index [currDim] - index [otherDim] * higherDimSizesProduct(otherDim);
+                index[currDim] = index[currDim] - index[otherDim] * higherDimSizesProduct(otherDim);
             }
-            index [currDim] = index [currDim] / higherDimSizesProduct(currDim);
+            index[currDim] = index[currDim] / higherDimSizesProduct(currDim);
         }
         return index;
     }
@@ -288,14 +276,13 @@ public class Array extends DataStructure {
      * = 0 in array[i][j][k], dim refers to the dimension indexed by i and the method
      * returns size[1]*size[2].
      *
-     * @param dim
-     *            The current dimension.
+     * @param dim The current dimension.
      * @return The product of all lower dimension sizes
      */
     private int higherDimSizesProduct (int dim) {
         int product = 1;
         for (int i = dim + 1; i < size.length; i++) {
-            product = product * size [i];
+            product = product * size[i];
         }
         return product;
     }
@@ -303,10 +290,9 @@ public class Array extends DataStructure {
     /**
      * Get the element at the specified by the given Locator.
      *
-     * @param locator
-     *            A Locator to specify the element to retrieve.
+     * @param locator A Locator to specify the element to retrieve.
      * @return The element at the location specified by the given locator, if it was
-     *         valid. Null otherwise.
+     * valid. Null otherwise.
      */
     @Override
     public IndexedElement getElement (Locator locator) {
@@ -319,8 +305,7 @@ public class Array extends DataStructure {
     /**
      * Get the element at the specified index.
      *
-     * @param index
-     *            The index from which to get an element.
+     * @param index The index from which to get an element.
      * @return The element at the given index if the index was valid, null otherwise.
      */
     public IndexedElement getElement (int[] index) {
@@ -337,8 +322,7 @@ public class Array extends DataStructure {
      * Add a new element to this Array. If there was already an element at the index of
      * the new element, the old element will be returned to the caller.
      *
-     * @param newElement
-     *            The element to insert.
+     * @param newElement The element to insert.
      * @return The element which was replaced, if applicable. Null otherwise.
      */
     public IndexedElement putElement (IndexedElement newElement) {
@@ -391,8 +375,7 @@ public class Array extends DataStructure {
     /**
      * Set min/max values and notify listener if there was a change.
      *
-     * @param x
-     *            The value to test.
+     * @param x The value to test.
      */
     private void checkMinMaxChanged (double x) {
         if (mmListener == null) {
@@ -440,23 +423,19 @@ public class Array extends DataStructure {
      * Interface for listening to changes in min and max values.
      *
      * @author Richard Sundqvist
-     *
      */
     public interface MinMaxListener {
         /**
          * Called when the min value changes.
          *
-         * @param newMax
-         *            The new maximum.
+         * @param newMax The new maximum.
          */
         public void maxChanged (double newMax);
 
         /**
          * Called when the max value changes.
          *
-         * @param newMin
-         *            The new minimum.
-         * @param diff
+         * @param newMin The new minimum.
          */
         public void minChanged (double newMin);
     }

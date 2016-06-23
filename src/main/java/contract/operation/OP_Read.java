@@ -11,8 +11,8 @@ public class OP_Read extends OP_ReadWrite {
     /**
      * Version number for this class.
      */
-    private static final long          serialVersionUID = Const.VERSION_NUMBER;
-    private static final OperationType OPERATION        = OperationType.read;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
+    private static final OperationType OPERATION = OperationType.read;
 
     /**
      * Create a new Read operation. Note that you must set the target, source and value.
@@ -29,8 +29,7 @@ public class OP_Read extends OP_ReadWrite {
      * Set the target variable for this Read operation. The identifier of the variable
      * should be previously declared in the header.
      *
-     * @param target
-     *            The target variable for this Read operation.
+     * @param target The target variable for this Read operation.
      */
     @Override
     public void setTarget (Locator target) {
@@ -41,8 +40,7 @@ public class OP_Read extends OP_ReadWrite {
      * Set the source variable for this Read operation. The identifier of the variable
      * should be previously declared in the header.
      *
-     * @param source
-     *            The source variable for this Read operation.
+     * @param source The source variable for this Read operation.
      */
     @Override
     public void setSource (Locator source) {
@@ -56,8 +54,7 @@ public class OP_Read extends OP_ReadWrite {
      * Set the value(s) which were read from {@code source}. This should be the value of
      * {@code target} and the specified index after operation execution, if applicable.
      *
-     * @param value
-     *            Set the value(s) which were read from {@code source}.
+     * @param value Set the value(s) which were read from {@code source}.
      */
     @Override
     public void setValue (double[] value) {

@@ -17,8 +17,7 @@ public class OP_ToggleScope extends OP_ReadWrite {
     /**
      * Set the target variable for this Remove operation.
      *
-     * @param target
-     *            The target variable for this Remove operation.
+     * @param target The target variable for this Remove operation.
      */
     @Override
     public void setTarget (Locator target) {
