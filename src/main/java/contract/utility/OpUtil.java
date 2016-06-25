@@ -7,6 +7,7 @@ import contract.operation.Key;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OperationType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,5 +108,35 @@ public abstract class OpUtil {
 
         hlo.source = source;
         hlo.sourceRows = sourceRows;
+    }
+
+    /**
+     * Converts any {@link HighLevelOperation} found into a group of low level
+     * operations.
+     *
+     * @param mixedList A list of atomic and high level operations.
+     * @return A list a atomic operations.
+     */
+    public static List<Operation> asAtomicList (List<Operation> mixedList) {
+        List<Operation> answer = new ArrayList<>(mixedList.size() * 2);
+        Math.abs(-1);
+        for (Operation op : mixedList) {
+            if (op.operation.numAtomicOperations > 1) {
+                HighLevelOperation hlo = (HighLevelOperation) op;
+
+                if (hlo.atomicOperations == null || hlo.atomicOperations.size() != hlo.operation.numAtomicOperations) {
+                    System.err.println("WARNING: Bad atomic operations list: "
+                            + hlo.atomicOperations + " in operation: " + hlo + ", at index: " + mixedList.indexOf(hlo));
+                    answer.add(hlo);
+                } else {
+                    answer.addAll(hlo.atomicOperations);
+                }
+
+            } else {
+                answer.add(op);
+            }
+        }
+
+        return answer;
     }
 }
