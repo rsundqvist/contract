@@ -17,43 +17,38 @@ import java.util.List;
  */
 public abstract class OpUtil {
 
-    public static Locator getLocator (Operation op, Key locatorKey) {
-        Locator ans = null;
-        switch (locatorKey) {
-            case source:
-            case target:
-            case var1:
-            case var2:
-                ans = (Locator) op.body.get(locatorKey);
-            default:
-                break;
+    /**
+     * Attempts to locate and return the locator identified by {@code key} from {@link Operation#body}.
+     *
+     * @param op The operation to retrieve a locator from.
+     * @param key The key for the locator.
+     * @return A Locator if it could be found, {@code null} otherwise.
+     * @throws IllegalArgumentException If the type found in the body was not a Locator.
+     */
+    public static Locator getLocator (Operation op, Key key) {
+        Object ans;
+
+        ans = op.body.get(key);
+
+        if (ans != null && !(ans instanceof Locator)) {
+            throw new IllegalArgumentException("Bad key or value:" +
+                    "The key \"" + key + "\" returned an object of type " + ans.getClass());
         }
 
-        return ans;
+        return (Locator) ans;
     }
 
-    public static String getIdentifier (Operation op) {
-        return (String) op.body.get(Key.identifier);
-    }
-
+    /**
+     * Returns the value, if any, carried by the operation.
+     * @param op The operation to retrieve the value from.
+     * @return An array of value(s).
+     */
     public static double[] getValue (Operation op) {
         return (double[]) op.body.get(Key.value);
     }
 
-    public static int[] getIndex (Operation op) {
-        return (int[]) op.body.get(Key.index);
-    }
-
-    public static int[] getSize (Operation op) {
-        return (int[]) op.body.get(Key.size);
-    }
-
-    public static OperationType getOperationTyope (Operation op) {
-        return (OperationType) op.body.get(Key.operation);
-    }
-
     /**
-     * Returns {@code true} if the operation is of type read, write, or message.
+     * Returns {@code true} if the operation is atomic ({@link OperationType#numAtomicOperations} < 2).
      *
      * @return {@code true} if the operation is atomic, {@code false} otherwise.
      */

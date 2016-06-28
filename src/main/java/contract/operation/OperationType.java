@@ -42,6 +42,9 @@ public enum OperationType {
     public final int numAtomicOperations;
 
     OperationType (Color color, int numOperations) {
+        if (numOperations < 0) {
+            throw new IllegalArgumentException("numOperations cannot be less than zero.");
+        }
         numAtomicOperations = numOperations;
         this.color = color;
     }
