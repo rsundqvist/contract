@@ -24,14 +24,14 @@ public enum RawType {
     public transient final String pretty;
     public transient final String json;
 
-    private RawType (String pretty, String json, AbstractType... absType) {
+    RawType (String pretty, String json, AbstractType... absType) {
         this.pretty = pretty;
         this.json = json;
         absTypes = absType;
     }
 
     /**
-     * Parse a json string.
+     * Parse a wrapper string.
      *
      * @param json The string to parse
      * @return The corresponding RawType, if applicable. Null otherwise.

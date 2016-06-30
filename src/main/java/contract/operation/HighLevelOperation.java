@@ -1,7 +1,7 @@
 package contract.operation;
 
 import contract.assets.Const;
-import contract.json.Operation;
+import contract.wrapper.Operation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

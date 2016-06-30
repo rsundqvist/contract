@@ -16,7 +16,7 @@ public interface CallbackListener {
     /**
      * @author Richard Sundqvist
      */
-    public static enum CallbackLevel {
+    public enum CallbackLevel {
         NORMAL, SEVERE;
     }
 }

@@ -2,9 +2,9 @@ package contract.datastructure;
 
 import contract.assets.Const;
 import contract.assets.Tools;
-import contract.json.AnnotatedVariable;
-import contract.json.Locator;
-import contract.json.Operation;
+import contract.wrapper.AnnotatedVariable;
+import contract.wrapper.Locator;
+import contract.wrapper.Operation;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
 import contract.operation.OP_ToggleScope;

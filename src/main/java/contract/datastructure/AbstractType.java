@@ -11,7 +11,7 @@ public enum AbstractType {
     public transient final String pretty;
     public transient final String json;
 
-    private AbstractType (String pretty, String json) {
+    AbstractType (String pretty, String json) {
         this.pretty = pretty;
         this.json = json;
     }
@@ -22,7 +22,7 @@ public enum AbstractType {
     }
 
     /**
-     * Parse a json string.
+     * Parse a wrapper string.
      *
      * @param json The string to parse
      * @return The corresponding RawType, if applicable. Null otherwise.

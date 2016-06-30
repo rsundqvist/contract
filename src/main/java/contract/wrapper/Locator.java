@@ -1,4 +1,4 @@
-package contract.json;
+package contract.wrapper;
 
 import contract.assets.Const;
 import contract.assets.Tools;

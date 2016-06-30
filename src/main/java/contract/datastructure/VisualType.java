@@ -22,7 +22,7 @@ public enum VisualType {
     public transient final String[] json;
     public transient final boolean isClone;
 
-    private VisualType (String pretty, String... json) {
+    VisualType (String pretty, String... json) {
         this.pretty = pretty;
         this.json = json;
         isClone = false;
@@ -32,9 +32,9 @@ public enum VisualType {
      * Constructor for enums which dont have their own render.
      *
      * @param original The original VisualType.
-     * @param json The json string for this VisualType.
+     * @param json The wrapper string for this VisualType.
      */
-    private VisualType (VisualType original, String... json) {
+    VisualType (VisualType original, String... json) {
         pretty = original.pretty;
         this.json = json;
         isClone = true;
@@ -61,7 +61,7 @@ public enum VisualType {
     }
 
     /**
-     * Returns the VisualType corresponding to the json name.
+     * Returns the VisualType corresponding to the wrapper name.
      *
      * @param json The name to resolve.
      * @return A VisualType, or null if the stylish name was unknown.

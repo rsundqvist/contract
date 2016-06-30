@@ -1,8 +1,8 @@
 package contract.utility;
 
 import com.google.gson.internal.LinkedTreeMap;
-import contract.json.Locator;
-import contract.json.Operation;
+import contract.wrapper.Locator;
+import contract.wrapper.Operation;
 import contract.operation.Key;
 import contract.operation.OP_Message;
 import contract.operation.OP_Read;

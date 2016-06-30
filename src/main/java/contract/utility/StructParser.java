@@ -3,7 +3,7 @@ package contract.utility;
 import contract.datastructure.Array;
 import contract.datastructure.DataStructure;
 import contract.datastructure.IndependentElement;
-import contract.json.AnnotatedVariable;
+import contract.wrapper.AnnotatedVariable;
 import contract.operation.Key;
 
 /**

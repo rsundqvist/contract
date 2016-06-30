@@ -2,7 +2,7 @@ package contract.io;
 
 import com.google.gson.Gson;
 import contract.assets.Const;
-import contract.json.Root;
+import contract.wrapper.Root;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;

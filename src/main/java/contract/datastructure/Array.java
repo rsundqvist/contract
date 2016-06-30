@@ -1,7 +1,7 @@
 package contract.datastructure;
 
 import contract.assets.Const;
-import contract.json.Locator;
+import contract.wrapper.Locator;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
 import contract.operation.OperationType;

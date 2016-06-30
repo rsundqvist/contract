@@ -1,8 +1,8 @@
 package contract.operation;
 
 import contract.assets.Const;
-import contract.json.Locator;
-import contract.json.Operation;
+import contract.wrapper.Locator;
+import contract.wrapper.Operation;
 
 import java.util.Arrays;
 import java.util.HashMap;

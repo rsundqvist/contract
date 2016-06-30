@@ -1,6 +1,6 @@
 package contract.io;
 
-import contract.json.Root;
+import contract.wrapper.Root;
 
 import java.io.Serializable;
 import java.util.List;

@@ -7,10 +7,10 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import contract.datastructure.DataStructure;
 import contract.io.Communicator.CommunicatorMessage;
-import contract.json.AnnotatedVariable;
-import contract.json.Header;
-import contract.json.Operation;
-import contract.json.Root;
+import contract.wrapper.AnnotatedVariable;
+import contract.wrapper.Header;
+import contract.wrapper.Operation;
+import contract.wrapper.Root;
 import contract.utility.OpParser;
 import contract.utility.StructParser;
 
@@ -46,7 +46,6 @@ public class LogStreamManager implements ComListener {
     private final Communicator communicator;
     private ComListener listener;
     // Wrapper fields
-    private Root wrapper;
     private Map<String, DataStructure> dataStructures;
     private List<Operation> operations;
     private Map<String, List<String>> sources;
@@ -154,8 +153,8 @@ public class LogStreamManager implements ComListener {
      * @throws JsonIOException       When Gson fails to read {@code logFile}.
      */
     public boolean readLog (File logFile) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
-        wrapper = gson.fromJson(new JsonReader(new FileReader(logFile)), Root.class);
-        return unwrap(wrapper);
+        Root contractRoot = gson.fromJson(new JsonReader(new FileReader(logFile)), Root.class);
+        return unwrap(contractRoot);
     }
 
     /**
@@ -195,13 +194,13 @@ public class LogStreamManager implements ComListener {
      * Print the operations and header information currently held by this
      * LogStreamManager. Set the public variable {@code PRETTY_PRINTING} to true to enable
      * human-readable output. If {@code autoName} is true, a file name on the form
-     * "YY-MM-DD_HHMMSS.json" will be generated.
+     * "YY-MM-DD_HHMMSS.wrapper" will be generated.
      *
      * @param targetPath The location to print the log file.
      * @param autoName If {@code true} file name will be created automatically.
      */
     public void printLog (String targetPath, boolean autoName) throws FileNotFoundException {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.putAll(dataStructures);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, sources);
         printLog(targetPath, new Root(header, operations), autoName);
@@ -213,7 +212,7 @@ public class LogStreamManager implements ComListener {
      * @return True if data was successfully streamed.
      */
     public boolean streamLogData () {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.putAll(dataStructures);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, null);
         return this.stream(new Root(header, operations));
@@ -252,7 +251,7 @@ public class LogStreamManager implements ComListener {
      * @return True if successful, false otherwise.
      */
     public boolean stream (Operation operation) {
-        ArrayList<Operation> operations = new ArrayList<Operation>();
+        ArrayList<Operation> operations = new ArrayList<>();
         operations.add(operation);
         return this.stream(new Root(null, operations));
     }
@@ -287,7 +286,7 @@ public class LogStreamManager implements ComListener {
      * @return True if successful, false otherwise.
      */
     public boolean stream (AnnotatedVariable annotatedVariable) {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.put(annotatedVariable.identifier, annotatedVariable);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, null);
         return this.stream(new Root(header, null));
@@ -356,7 +355,7 @@ public class LogStreamManager implements ComListener {
         Gson GSON;
         DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd_HHmmss");
         Calendar cal = Calendar.getInstance();
-        String fileName = autoName ? File.separator + dateFormat.format(cal.getTime()) + ".json" : "";
+        String fileName = autoName ? File.separator + dateFormat.format(cal.getTime()) + ".wrapper" : "";
         if (PRETTY_PRINTING) {
             GSON = new GsonBuilder().setPrettyPrinting().create();
         } else {
@@ -419,7 +418,7 @@ public class LogStreamManager implements ComListener {
         if (messageType == CommunicatorMessage.WRAPPER) {
             List<Root> wrappers = communicator.getAllQueuedMessages();
             for (Root w : wrappers) {
-                if (this.unwrap(w) == false) {
+                if (!unwrap(w)) {
                     return;
                 }
             }
