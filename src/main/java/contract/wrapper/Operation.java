@@ -25,6 +25,7 @@ public abstract class Operation implements Serializable {
      *
      */
     // ============================================================= //
+
     /**
      * The literal name of the operation.
      */
@@ -44,8 +45,8 @@ public abstract class Operation implements Serializable {
     public int[] sourceRows;
     /**
      * The logical execution order for the operation. {@code Negative} values are generally ignored.
-     * Duplicates are permitted. All operations with a
-     * given value may be executed and visualized in one batch.
+     * Duplicates are permitted. All operations with a given value may be executed and visualized
+     * in one batch.
      */
     public int group;
 
@@ -74,13 +75,16 @@ public abstract class Operation implements Serializable {
     }
 
     /**
-     * Default constructor for the Operation type.
+     * Create a new Operation.
      */
     public Operation () {
-        this.operation = null;
-        this.body = new HashMap<>();
-        this.source = null;
-        this.sourceRows = null;
+        System.out.println("no args!");
+        System.out.println("no args!");
+        System.out.println("no args!");
+        System.out.println("no args!");
+        System.out.println("no args!");
+        System.out.println("no args!");
+        System.out.println("no args!");
         this.group = -1;
     }
 
@@ -98,6 +102,6 @@ public abstract class Operation implements Serializable {
 
     @Override
     public String toString () {
-        return body == null ? "null" : body.toString();
+        return operation.toString().toUpperCase();
     }
 }
