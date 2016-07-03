@@ -73,6 +73,17 @@ public abstract class Operation implements Serializable {
         this.group = -1;
     }
 
+    /**
+     * Default constructor for the Operation type.
+     */
+    public Operation () {
+        this.operation = null;
+        this.body = new HashMap<>();
+        this.source = null;
+        this.sourceRows = null;
+        this.group = -1;
+    }
+
     // ============================================================= //
     /*
      *
