@@ -1,12 +1,8 @@
 package contract.utility;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.internal.LinkedTreeMap;
-
-import contract.json.Locator;
-import contract.json.Operation;
+import contract.wrapper.Locator;
+import contract.wrapper.Operation;
 import contract.operation.Key;
 import contract.operation.OP_Message;
 import contract.operation.OP_Read;
@@ -16,31 +12,35 @@ import contract.operation.OP_ToggleScope;
 import contract.operation.OP_Write;
 import contract.operation.OperationType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Contains methods to parse operations. Cannot be instantiated.
  *
  * @author Richard Sundqvist
- *
  */
 public abstract class OpParser {
 
     private OpParser () {
-    };
+    }
+
+    ;
 
     public static Operation unpackOperation (Operation op) {
         switch (op.operation) {
-        case read:
-        case write:
-            return parseReadWrite(op);
-        case message:
-            return parseMessage(op);
-        case swap:
-            return parseSwap(op);
-        case remove:
-            return parseRemove(op);
-        default:
-            System.err.println("Unknown operation type: " + op.operation);
-            break;
+            case read:
+            case write:
+                return parseReadWrite(op);
+            case message:
+                return parseMessage(op);
+            case swap:
+                return parseSwap(op);
+            case remove:
+                return parseRemove(op);
+            default:
+                System.err.println("Unknown operation type: " + op.operation);
+                break;
         }
         return null;
     }
@@ -71,7 +71,7 @@ public abstract class OpParser {
             index = new int[((ArrayList<Double>) indexAL).size()];
             int i = 0;
             for (Double integer : (ArrayList<Double>) indexAL) {
-                index [i] = integer.intValue();
+                index[i] = integer.intValue();
                 i++;
             }
         }
@@ -141,10 +141,8 @@ public abstract class OpParser {
     /**
      * Naive implementation to flatten a multi-dimensional list into a single dimension.
      *
-     * @param list
-     *            The multi-dimensional list to flatten.
-     * @param ack
-     *            The result.
+     * @param list The multi-dimensional list to flatten.
+     * @param ack The result.
      */
     // @SuppressWarnings("unchecked")
     // private static <T> void unwrapNestedList(ArrayList<Object> list,
@@ -163,12 +161,11 @@ public abstract class OpParser {
     // }
     // }
     // }
-
     private static double[] parseValue (Operation op) {
         return ensureDoubleArray(op.body.get(Key.value));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static double[] ensureDoubleArray (Object object) {
         if (object == null) {
             return null;
@@ -177,7 +174,7 @@ public abstract class OpParser {
             return (double[]) object;
         }
         if (object instanceof Double) {
-            return new double[] { (Double) object };
+            return new double[]{(Double) object};
         }
         if (object instanceof ArrayList && ((ArrayList) object).get(0) instanceof ArrayList) {
             ArrayList<Double> fulhack = new ArrayList<Double>();
@@ -189,7 +186,7 @@ public abstract class OpParser {
             double[] array = new double[fulhack.size()];
             int i = 0;
             for (Double d : fulhack) {
-                array [i] = d.doubleValue();
+                array[i] = d.doubleValue();
                 i++;
             }
             return array;
@@ -198,7 +195,7 @@ public abstract class OpParser {
             double[] array = new double[listOfDoubles.size()];
             int i = 0;
             for (Double d : listOfDoubles) {
-                array [i] = d.doubleValue();
+                array[i] = d.doubleValue();
                 i++;
             }
             return array;
@@ -208,8 +205,7 @@ public abstract class OpParser {
     /**
      * Convert a List of ints or doubles to an array of ints.
      *
-     * @param listOrArray
-     *            Should be an int array, or an ArrayList of Integers or Doubles.
+     * @param listOrArray Should be an int array, or an ArrayList of Integers or Doubles.
      * @return An array of ints, or null.
      */
     @SuppressWarnings("unchecked")
@@ -232,13 +228,13 @@ public abstract class OpParser {
         // Integers
         if (testCase instanceof Integer) {
             for (Object d : listOfNumbers) {
-                array [i] = ((Integer) d).intValue();
+                array[i] = ((Integer) d).intValue();
                 i++;
             }
         } else {
             // Doubles
             for (Object d : listOfNumbers) {
-                array [i] = ((Double) d).intValue();
+                array[i] = ((Double) d).intValue();
                 i++;
             }
         }
@@ -250,7 +246,7 @@ public abstract class OpParser {
         String[] strs = str.split(",");
         double[] dbls = new double[strs.length];
         for (int i = 0; i < strs.length; i++) {
-            dbls [i] = Double.parseDouble(strs [i]);
+            dbls[i] = Double.parseDouble(strs[i]);
         }
         return dbls;
     }

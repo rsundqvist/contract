@@ -4,38 +4,36 @@ package contract.datastructure;
  * The raw type of the data structure.
  *
  * @author Richard Sundqvist
- *
  */
 public enum RawType {
     array("Array", "array", AbstractType.tree), // An array of objects or
-                                                // primitives.
+    // primitives.
     tree("Tree", "tree"), independentElement("Orphan", "independentElement"); // A
-                                                                              // loose
-                                                                              // element,
-                                                                              // such
-                                                                              // as
-                                                                              // a
-                                                                              // tmp
-                                                                              // variable.
+    // loose
+    // element,
+    // such
+    // as
+    // a
+    // tmp
+    // variable.
 
     /**
      * The permitted AbstractTypes for this RawType.
      */
     public transient final AbstractType[] absTypes;
-    public transient final String         pretty;
-    public transient final String         json;
+    public transient final String pretty;
+    public transient final String json;
 
-    private RawType (String pretty, String json, AbstractType... absType) {
+    RawType (String pretty, String json, AbstractType... absType) {
         this.pretty = pretty;
         this.json = json;
         absTypes = absType;
     }
 
     /**
-     * Parse a json string.
+     * Parse a wrapper string.
      *
-     * @param json
-     *            The string to parse
+     * @param json The string to parse
      * @return The corresponding RawType, if applicable. Null otherwise.
      */
     public static RawType fromString (String json) {

@@ -1,12 +1,10 @@
 package contract.datastructure;
 
-import java.util.Map;
-
 import contract.assets.Const;
 import contract.assets.Tools;
-import contract.json.AnnotatedVariable;
-import contract.json.Locator;
-import contract.json.Operation;
+import contract.wrapper.AnnotatedVariable;
+import contract.wrapper.Locator;
+import contract.wrapper.Operation;
 import contract.operation.OP_ReadWrite;
 import contract.operation.OP_Swap;
 import contract.operation.OP_ToggleScope;
@@ -18,11 +16,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.util.Map;
+
 /**
  * A data structure for use in visualisation.
  *
  * @author Richard Sundqvist
- *
  */
 public abstract class DataStructure extends AnnotatedVariable implements OperationCounterHaver {
 
@@ -37,43 +36,43 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Version number for this class.
      */
-    private static final long                         serialVersionUID     = Const.VERSION_NUMBER;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
     /**
      * The elements held by this DataStructure.
      */
-    protected transient final ObservableList<Element> elements             = FXCollections.observableArrayList();
+    protected transient final ObservableList<Element> elements = FXCollections.observableArrayList();
     /**
      * Elements which have been modified and should be drawn with their preferred colour.
      */
-    protected transient final ObservableList<Element> modifiedElements     = FXCollections.observableArrayList();
+    protected transient final ObservableList<Element> modifiedElements = FXCollections.observableArrayList();
     /**
      * Elements which are to be reset after being drawn with their preferred colour.
      */
-    protected transient final ObservableList<Element> resetElements        = FXCollections.observableArrayList();
+    protected transient final ObservableList<Element> resetElements = FXCollections.observableArrayList();
     /**
      * Elements which should not be drawn or should be masked.
      */
-    protected transient final ObservableList<Element> inactiveElements     = FXCollections.observableArrayList();
+    protected transient final ObservableList<Element> inactiveElements = FXCollections.observableArrayList();
     /**
      * If false, this entire DataStructure is considered inactive (as opposed to just a
      * single element).
      */
-    private transient boolean                         active               = true;
+    private transient boolean active = true;
     /**
      * Counter for operations performed on the structure.
      */
-    protected transient final OperationCounter        oc                   = new OperationCounter();
+    protected transient final OperationCounter oc = new OperationCounter();
 
     /**
      * Indicates that major changes have occurred, justifying a re-initialisation.
      */
-    protected transient boolean                       repaintAll           = false;
+    protected transient boolean repaintAll = false;
 
     /**
      * Indicates that this structure's {@link #applyOperation(Operation)} method has been
      * called. This variable is never reset.
      */
-    protected transient boolean                       applyOperationCalled = false;
+    protected transient boolean applyOperationCalled = false;
 
     // ============================================================= //
     /*
@@ -86,19 +85,14 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Creates a new DataStructure.
      *
-     * @param identifier
-     *            The identifier for this variable.
-     * @param rawType
-     *            The basic data structure for this variable.
-     * @param abstractType
-     *            The type of data structure this variable logically represents.
-     * @param visual
-     *            The preferred graphical representation for this variable.
-     * @param attributes
-     *            the map of attributes for this AnnotatedVariable.
+     * @param identifier The identifier for this variable.
+     * @param rawType The basic data structure for this variable.
+     * @param abstractType The type of data structure this variable logically represents.
+     * @param visual The preferred graphical representation for this variable.
+     * @param attributes the map of attributes for this AnnotatedVariable.
      */
     public DataStructure (String identifier, RawType rawType, AbstractType abstractType, VisualType visual,
-            Map<String, Object> attributes) {
+                          Map<String, Object> attributes) {
         super(identifier, rawType, abstractType, visual, attributes);
     }
 
@@ -113,24 +107,21 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Execute a swap operation.
      *
-     * @param op
-     *            The operation to execute.
+     * @param op The operation to execute.
      */
     protected abstract void executeSwap (OP_Swap op);
 
     /**
      * Execute a read/write operation.
      *
-     * @param op
-     *            The operation to execute.
+     * @param op The operation to execute.
      */
     protected abstract void executeRW (OP_ReadWrite op);
 
     /**
      * Returns an element based on a Locator.
      *
-     * @param locator
-     *            The locator for the Element.
+     * @param locator The locator for the Element.
      * @return An element if it could be found, null otherwise.
      */
     public abstract Element getElement (Locator locator);
@@ -163,25 +154,24 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Apply an operation to the structure
      *
-     * @param op
-     *            The operation to be apply.
+     * @param op The operation to be apply.
      */
     public void applyOperation (Operation op) {
         applyOperationCalled = true;
 
         switch (op.operation) {
-        case read:
-        case write:
-            executeRW((OP_ReadWrite) op);
-            break;
-        case swap:
-            executeSwap((OP_Swap) op);
-            break;
-        case remove:
-            toggleScope((OP_ToggleScope) op);
-            return;
-        default:
-            break;
+            case read:
+            case write:
+                executeRW((OP_ReadWrite) op);
+                break;
+            case swap:
+                executeSwap((OP_Swap) op);
+                break;
+            case remove:
+                toggleScope((OP_ToggleScope) op);
+                return;
+            default:
+                break;
         }
         setActive(true);
     }
@@ -190,8 +180,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * Indicate to the DataStructure that the lists returned by
      * {@code getModifiedElements()} <b>and</b> {@code getResetElements} have been drawn.
      *
-     * @param paint
-     *            The color to use for this element after reset. Null defaults to white.
+     * @param paint The color to use for this element after reset. Null defaults to white.
      */
     public void elementsDrawn (Paint paint) {
         paint = paint == null ? Color.WHITE : paint;
@@ -215,8 +204,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * an identifier equalling the identifier of this DataStructure but no index, the
      * entire structure will become inactive.
      *
-     * @param op
-     *            A Remove operation.
+     * @param op A Remove operation.
      */
     protected void toggleScope (OP_ToggleScope op) {
         Locator target = op.getTarget();
@@ -306,8 +294,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Set the VisualType.
      *
-     * @param vt
-     *            The new VisualType.
+     * @param vt The new VisualType.
      */
     public void setVisual (VisualType vt) {
         if (vt != visual) {
@@ -331,8 +318,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * Set the flag indicate whether this structure has changed so significantly that all
      * elements should be drawn again.
      *
-     * @param repaintAll
-     *            The new repaint status for the structure.
+     * @param repaintAll The new repaint status for the structure.
      */
     public void setRepaintAll (boolean repaintAll) {
         this.repaintAll = repaintAll;
@@ -343,7 +329,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * method has been called. This variable is never reset.
      *
      * @return {@code true} if this data structure has been accessed using
-     *         {@code applyOperation ()} .
+     * {@code applyOperation ()} .
      */
     public boolean isApplyOperationCalled () {
         return applyOperationCalled;
@@ -361,8 +347,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Set the active status of this DataStructure.
      *
-     * @param value
-     *            The new active status of this DataStructure.
+     * @param value The new active status of this DataStructure.
      */
     public void setActive (boolean value) {
         if (value != active) {
@@ -391,8 +376,7 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
     /**
      * Set a listener to be notified when the visual type changes.
      *
-     * @param listener
-     *            A VisualListener.
+     * @param listener A VisualListener.
      */
     public void setVisualListener (VisualListener listener) {
         visualListener = listener;
@@ -427,15 +411,13 @@ public abstract class DataStructure extends AnnotatedVariable implements Operati
      * Interface for listening to changes in the VisualType.
      *
      * @author Richard Sundqvist
-     *
      */
 
     public static interface VisualListener {
         /**
          * Called when the VisualType of the DataStructure changes.
          *
-         * @param newVisual
-         *            The new VisualType.
+         * @param newVisual The new VisualType.
          */
         public void visualChanged (VisualType newVisual);
     }

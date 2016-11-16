@@ -1,11 +1,11 @@
-package contract.json;
+package contract.wrapper;
+
+import contract.assets.Const;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import contract.assets.Const;
 
 /**
  * Header item for the {@code Wrapper} class.
@@ -15,16 +15,16 @@ public class Header implements Serializable {
     /**
      * Version number for this class.
      */
-    private static final long                   serialVersionUID = Const.VERSION_NUMBER;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
     /**
      * Default value for the {@code version} field.
      */
-    public static final int                     VERSION_UNKNOWN  = 0;
+    public static final int VERSION_UNKNOWN = 0;
     /**
      * The version number for this file. Version 0 is reserved for when the version number
      * is unknown.
      */
-    public final int                            version;
+    public final int version;
     /**
      * Declaration of annotated variables from the source.
      */
@@ -32,18 +32,15 @@ public class Header implements Serializable {
     /**
      * A map of metadata identifiers and their contents.
      */
-    public final Map<String, List<String>>      sources;
+    public final Map<String, List<String>> sources;
 
     /**
      * Create a Header item with the given version number and map of annotated variables.
      * Version 0 is reserved for when the version number is unknown.
      *
-     * @param version
-     *            The version number for this file.
-     * @param annotatedVariables
-     *            Declaration of annotated variables from the source.
-     * @param sources
-     *            The sources for this Header.
+     * @param version The version number for this file.
+     * @param annotatedVariables Declaration of annotated variables from the source.
+     * @param sources The sources for this Header.
      */
     public Header (int version, Map<String, AnnotatedVariable> annotatedVariables, Map<String, List<String>> sources) {
         this.version = version;

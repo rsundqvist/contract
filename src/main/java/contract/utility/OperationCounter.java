@@ -1,23 +1,22 @@
 package contract.utility;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import contract.operation.OperationType;
 import javafx.beans.property.SimpleIntegerProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class which counts performed operations.
  *
  * @author Richard Sundqvist
- *
  */
 public class OperationCounter {
 
-    private final SimpleIntegerProperty read    = new SimpleIntegerProperty(0);
-    private final SimpleIntegerProperty write   = new SimpleIntegerProperty(0);
-    private final SimpleIntegerProperty swap    = new SimpleIntegerProperty(0);
-    private final SimpleIntegerProperty remove  = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty read = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty write = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty swap = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty remove = new SimpleIntegerProperty(0);
     private final SimpleIntegerProperty message = new SimpleIntegerProperty(0);
 
     /**
@@ -66,8 +65,7 @@ public class OperationCounter {
     /**
      * Count an operation. Calls {@code countOperation(OperationType type)}.
      *
-     * @param op
-     *            The operation to count.
+     * @param op The operation to count.
      */
     public void count (OperationType op) {
         countOperation(op);
@@ -76,28 +74,27 @@ public class OperationCounter {
     /**
      * Count an operation type.
      *
-     * @param type
-     *            The count to count.
+     * @param type The count to count.
      */
     public void countOperation (OperationType type) {
         switch (type) {
-        case message:
-            message.setValue(message.getValue() + 1);
-            break;
-        case read:
-            read.setValue(read.getValue() + 1);
-            break;
-        case remove:
-            remove.setValue(remove.getValue() + 1);
-            break;
-        case swap:
-            swap.setValue(swap.getValue() + 1);
-            break;
-        case write:
-            write.setValue(write.getValue() + 1);
-            break;
-        default:
-            break;
+            case message:
+                message.setValue(message.getValue() + 1);
+                break;
+            case read:
+                read.setValue(read.getValue() + 1);
+                break;
+            case remove:
+                remove.setValue(remove.getValue() + 1);
+                break;
+            case swap:
+                swap.setValue(swap.getValue() + 1);
+                break;
+            case write:
+                write.setValue(write.getValue() + 1);
+                break;
+            default:
+                break;
 
         }
     }
@@ -173,7 +170,6 @@ public class OperationCounter {
      * Interface for classes which count the {@link #Operation}'s performed on it.
      *
      * @author Richard Sundqvist
-     *
      */
     public interface OperationCounterHaver {
         /**
@@ -187,8 +183,7 @@ public class OperationCounter {
          * Print stats for a OperationCounterHaver using the {@link #getStatistics()}
          * method.
          *
-         * @param och
-         *            The OperationCounterHaver whose counter should be used.
+         * @param och The OperationCounterHaver whose counter should be used.
          */
         public static List<String> printStatistics (OperationCounterHaver och) {
             return och.getCounter().getStatistics();

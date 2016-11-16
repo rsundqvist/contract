@@ -39,9 +39,12 @@ public enum OperationType {
      * the operation is atomic, 0 indicates that its execution will not affect any data
      * structures.
      */
-    public final int   numAtomicOperations;
+    public final int numAtomicOperations;
 
     OperationType (Color color, int numOperations) {
+        if (numOperations < 0) {
+            throw new IllegalArgumentException("numOperations cannot be less than zero.");
+        }
         numAtomicOperations = numOperations;
         this.color = color;
     }

@@ -1,7 +1,7 @@
 package contract.operation;
 
 import contract.assets.Const;
-import contract.json.Locator;
+import contract.wrapper.Locator;
 
 /**
  * Create a new Write operation.
@@ -11,8 +11,8 @@ public class OP_Write extends OP_ReadWrite {
     /**
      * Version number for this class.
      */
-    private static final long          serialVersionUID = Const.VERSION_NUMBER;
-    private static final OperationType OPERATION        = OperationType.write;
+    private static final long serialVersionUID = Const.VERSION_NUMBER;
+    private static final OperationType OPERATION = OperationType.write;
 
     /**
      * Create a new Write operation. Note that you must set the target, source and value.
@@ -29,8 +29,7 @@ public class OP_Write extends OP_ReadWrite {
      * Set the target variable for this Write operation. The identifier of the variable
      * should be previously declared in the header.
      *
-     * @param target
-     *            The target variable for this Write operation.
+     * @param target The target variable for this Write operation.
      */
     @Override
     public void setTarget (Locator target) {
@@ -44,8 +43,7 @@ public class OP_Write extends OP_ReadWrite {
      * Set the source variable for this Write operation. The identifier of the variable
      * should be previously declared in the header.
      *
-     * @param source
-     *            The source variable for this Write operation.
+     * @param source The source variable for this Write operation.
      */
     @Override
     public void setSource (Locator source) {
@@ -56,8 +54,7 @@ public class OP_Write extends OP_ReadWrite {
      * Set the value(s) which were written to {@code target} (from {@code source}, if
      * applicable).
      *
-     * @param value
-     *            Set the value(s) written to {@code target}.
+     * @param value Set the value(s) written to {@code target}.
      */
     @Override
     public void setValue (double[] value) {

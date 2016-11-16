@@ -1,7 +1,7 @@
 package contract.operation;
 
 import contract.assets.Const;
-import contract.json.Locator;
+import contract.wrapper.Locator;
 
 public class OP_ToggleScope extends OP_ReadWrite {
 
@@ -17,8 +17,7 @@ public class OP_ToggleScope extends OP_ReadWrite {
     /**
      * Set the target variable for this Remove operation.
      *
-     * @param target
-     *            The target variable for this Remove operation.
+     * @param target The target variable for this Remove operation.
      */
     @Override
     public void setTarget (Locator target) {

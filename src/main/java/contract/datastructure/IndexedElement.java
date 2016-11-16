@@ -6,7 +6,6 @@ import java.util.Arrays;
  * An element with an n-dimensional index.
  *
  * @author Richard Sundqvist
- *
  */
 public class IndexedElement extends Element {
 
@@ -15,18 +14,16 @@ public class IndexedElement extends Element {
     /**
      * Construct a new ArrayElement with the given value and index.
      *
-     * @param value
-     *            The value for this ArrayElement.
-     * @param index
-     *            The index for this ArrayElement.
+     * @param value The value for this ArrayElement.
+     * @param index The index for this ArrayElement.
      */
     public IndexedElement (double value, int[] index) {
         this.setValue(value);
         setIndex(index);
     }
 
-    private final int primes[] = { 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709,
-            719, 727, 733 };
+    private final int primes[] = {607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709,
+            719, 727, 733};
 
     @Override
     public int hashCode () {
@@ -36,7 +33,7 @@ public class IndexedElement extends Element {
 
         int indexHash = 0;
         for (int i = 0; i < index.length; i++) {
-            indexHash = index [i] * primes [i];
+            indexHash = index[i] * primes[i];
         }
         return indexHash;
     }
@@ -53,8 +50,7 @@ public class IndexedElement extends Element {
     /**
      * Set the index of this ArrayElement.
      *
-     * @param newIndex
-     *            The new index of this ArrayElement.
+     * @param newIndex The new index of this ArrayElement.
      */
     public void setIndex (int[] newIndex) {
         index = newIndex;
@@ -63,8 +59,7 @@ public class IndexedElement extends Element {
     /**
      * Returns true if value and index are equal, false otherwise.
      *
-     * @param obj
-     *            The object to compare this ArrayVariable to.
+     * @param obj The object to compare this ArrayVariable to.
      */
     @Override
     public boolean equals (Object obj) {

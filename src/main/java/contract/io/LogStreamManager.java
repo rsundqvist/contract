@@ -1,5 +1,19 @@
 package contract.io;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+import contract.datastructure.DataStructure;
+import contract.io.Communicator.CommunicatorMessage;
+import contract.wrapper.AnnotatedVariable;
+import contract.wrapper.Header;
+import contract.wrapper.Operation;
+import contract.wrapper.Root;
+import contract.utility.OpParser;
+import contract.utility.StructParser;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,21 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
-
-import contract.datastructure.DataStructure;
-import contract.io.Communicator.CommunicatorMessage;
-import contract.json.AnnotatedVariable;
-import contract.json.Header;
-import contract.json.Operation;
-import contract.json.Root;
-import contract.utility.OpParser;
-import contract.utility.StructParser;
-
 /**
  * A LogStreamManager handles communication between processes, components, and the OS file
  * system. <br>
@@ -42,23 +41,21 @@ public class LogStreamManager implements ComListener {
      * Set to {@code true} to enable human readable printing of log files. {@code false}
      * by default to increase performance.
      */
-    public boolean                     PRETTY_PRINTING = false;
-    private final Gson                 gson            = GsonContructor.build();
-    private final Communicator         communicator;
-    private ComListener                listener;
+    public boolean PRETTY_PRINTING = false;
+    private final Gson gson = GsonContructor.build();
+    private final Communicator communicator;
+    private ComListener listener;
     // Wrapper fields
-    private Root                       wrapper;
     private Map<String, DataStructure> dataStructures;
-    private List<Operation>            operations;
-    private Map<String, List<String>>  sources;
+    private List<Operation> operations;
+    private Map<String, List<String>> sources;
 
     /**
      * Creates a new LogStreamManager. Will not unwrap streamed messages if the listener
      * is null.
      *
-     * @param agentDescriptor
-     *            The name of the agent using this LogStreamManager, such as
-     *            "JavaAnnotationProcessor" or "GUI".
+     * @param agentDescriptor The name of the agent using this LogStreamManager, such as
+     * "JavaAnnotationProcessor" or "GUI".
      */
     public LogStreamManager (String agentDescriptor) {
         this(agentDescriptor, false);
@@ -68,11 +65,9 @@ public class LogStreamManager implements ComListener {
      * Creates a new LogStreamManager. Will not unwrap streamed messages if the listener
      * is null.
      *
-     * @param suppressIncoming
-     *            If {@code true}, most incoming messages will be ignored.
-     * @param agentDescriptor
-     *            The name of the agent using this LogStreamManager, such as
-     *            "JavaAnnotationProcessor" or "GUI".
+     * @param suppressIncoming If {@code true}, most incoming messages will be ignored.
+     * @param agentDescriptor The name of the agent using this LogStreamManager, such as
+     * "JavaAnnotationProcessor" or "GUI".
      */
     public LogStreamManager (String agentDescriptor, boolean suppressIncoming) {
         communicator = new JGroupCommunicator("LogStreamManager/" + agentDescriptor, this, suppressIncoming);
@@ -93,8 +88,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Set the map of known variables used by this LogStreamManager.
      *
-     * @param newDataStrutures
-     *            A new map of known variables to be used by this LogStreamManager.
+     * @param newDataStrutures A new map of known variables to be used by this LogStreamManager.
      */
     public void setDataStructures (Map<String, DataStructure> newDataStrutures) {
         dataStructures = newDataStrutures;
@@ -112,8 +106,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Set the list of operations used by this LogStreamManager.
      *
-     * @param operations
-     *            A new list of operations to be used by this LogStreamManager.
+     * @param operations A new list of operations to be used by this LogStreamManager.
      */
     public void setOperations (List<Operation> operations) {
         this.operations = operations;
@@ -131,8 +124,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Set the source map held by this LogStreamManager.
      *
-     * @param newSources
-     *            The new source map to be held by this LogStreamManager.
+     * @param newSources The new source map to be held by this LogStreamManager.
      */
     public void setSources (Map<String, List<String>> newSources) {
         sources = newSources;
@@ -141,16 +133,11 @@ public class LogStreamManager implements ComListener {
     /**
      * Read a log file from the file specified by {@code filePath}.
      *
-     * @param filePath
-     *            Location of the file to read.
+     * @param filePath Location of the file to read.
      * @return {@code true} if the log was successfully read. {@code false} otherwise.
-     * @return {@code true} if the log was successfully read. {@code false} otherwise.
-     * @throws FileNotFoundException
-     *             If {@code logFile} could not be opened.
-     * @throws JsonSyntaxException
-     *             If the file could not be parsed by Gson.
-     * @throws JsonIOException
-     *             When Gson fails to read {@code logFile}.
+     * @throws FileNotFoundException If {@code logFile} could not be opened.
+     * @throws JsonSyntaxException   If the file could not be parsed by Gson.
+     * @throws JsonIOException       When Gson fails to read {@code logFile}.
      */
     public boolean readLog (String filePath) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
         return readLog(new File(filePath));
@@ -159,19 +146,15 @@ public class LogStreamManager implements ComListener {
     /**
      * Read, unwrap and store data from a JSON log file.
      *
-     * @param logFile
-     *            The file to read.
+     * @param logFile The file to read.
      * @return {@code true} if the log was successfully read. {@code false} otherwise.
-     * @throws FileNotFoundException
-     *             If {@code logFile} could not be opened.
-     * @throws JsonSyntaxException
-     *             If the file could not be parsed by Gson.
-     * @throws JsonIOException
-     *             When Gson fails to read {@code logFile}.
+     * @throws FileNotFoundException If {@code logFile} could not be opened.
+     * @throws JsonSyntaxException   If the file could not be parsed by Gson.
+     * @throws JsonIOException       When Gson fails to read {@code logFile}.
      */
     public boolean readLog (File logFile) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
-        wrapper = gson.fromJson(new JsonReader(new FileReader(logFile)), Root.class);
-        return unwrap(wrapper);
+        Root contractRoot = gson.fromJson(new JsonReader(new FileReader(logFile)), Root.class);
+        return unwrap(contractRoot);
     }
 
     /**
@@ -189,9 +172,7 @@ public class LogStreamManager implements ComListener {
      * human-readable output. Will generate a filename automatically on the form
      * YY-MM-DD_HHMMSS.
      *
-     * @param targetDir
-     *            The directory to print the log file.
-     * @throws FileNotFoundException
+     * @param targetDir The directory to print the log file.
      */
     public void printLogAutoName (File targetDir) throws FileNotFoundException {
         this.printLog(targetDir.toString(), true);
@@ -203,9 +184,7 @@ public class LogStreamManager implements ComListener {
      * human-readable output. Will generate a filename automatically on the form
      * YY-MM-DD_HHMMSS.
      *
-     * @param target
-     *            The location and file name of the file to print.
-     * @throws FileNotFoundException
+     * @param target The location and file name of the file to print.
      */
     public void printLog (File target) throws FileNotFoundException {
         this.printLog(target.toString(), false);
@@ -215,15 +194,13 @@ public class LogStreamManager implements ComListener {
      * Print the operations and header information currently held by this
      * LogStreamManager. Set the public variable {@code PRETTY_PRINTING} to true to enable
      * human-readable output. If {@code autoName} is true, a file name on the form
-     * "YY-MM-DD_HHMMSS.json" will be generated.
+     * "YY-MM-DD_HHMMSS.wrapper" will be generated.
      *
-     * @param targetPath
-     *            The location to print the log file.
-     * @param autoName
-     *            If {@code true} file name will be created automatically.
+     * @param targetPath The location to print the log file.
+     * @param autoName If {@code true} file name will be created automatically.
      */
     public void printLog (String targetPath, boolean autoName) throws FileNotFoundException {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.putAll(dataStructures);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, sources);
         printLog(targetPath, new Root(header, operations), autoName);
@@ -235,7 +212,7 @@ public class LogStreamManager implements ComListener {
      * @return True if data was successfully streamed.
      */
     public boolean streamLogData () {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.putAll(dataStructures);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, null);
         return this.stream(new Root(header, operations));
@@ -260,8 +237,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Stream the given Wrapper using the Communicator carried by this LogStreamManager.
      *
-     * @param wrapper
-     *            The Wrapper to stream.
+     * @param wrapper The Wrapper to stream.
      * @return True if successful, false otherwise.
      */
     public boolean stream (Root wrapper) {
@@ -271,12 +247,11 @@ public class LogStreamManager implements ComListener {
     /**
      * Stream the given Wrapper using the Communicator carried by this LogStreamManager.
      *
-     * @param operation
-     *            The Operation to stream.
+     * @param operation The Operation to stream.
      * @return True if successful, false otherwise.
      */
     public boolean stream (Operation operation) {
-        ArrayList<Operation> operations = new ArrayList<Operation>();
+        ArrayList<Operation> operations = new ArrayList<>();
         operations.add(operation);
         return this.stream(new Root(null, operations));
     }
@@ -285,8 +260,7 @@ public class LogStreamManager implements ComListener {
      * Stream the given JSON string using the Communicator carried by this
      * LogStreamManager.
      *
-     * @param json
-     *            The JSON String to stream.
+     * @param json The JSON String to stream.
      * @return True if successful, false otherwise.
      */
     public boolean stream (String json) {
@@ -297,8 +271,7 @@ public class LogStreamManager implements ComListener {
      * Stream the given Operation list using the Communicator carried by this
      * LogStreamManager.
      *
-     * @param operations
-     *            The operations to stream.
+     * @param operations The operations to stream.
      * @return True if successful, false otherwise.
      */
     public boolean streamOperations (List<Operation> operations) {
@@ -309,12 +282,11 @@ public class LogStreamManager implements ComListener {
      * Stream the given AnnotatedVariable using the Communicator carried by this
      * LogStreamManager.
      *
-     * @param annotatedVariable
-     *            The Wrapper to stream.
+     * @param annotatedVariable The Wrapper to stream.
      * @return True if successful, false otherwise.
      */
     public boolean stream (AnnotatedVariable annotatedVariable) {
-        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
+        HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<>();
         annotatedVariables.put(annotatedVariable.identifier, annotatedVariable);
         Header header = new Header(Header.VERSION_UNKNOWN, annotatedVariables, null);
         return this.stream(new Root(header, null));
@@ -323,8 +295,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Stream the given Wrapper using the Communicator carried by this LogStreamManager.
      *
-     * @param wrappers
-     *            The Wrappers to stream.
+     * @param wrappers The Wrappers to stream.
      * @return True if ALL wrappers successfully sent, false otherwise.
      */
     public boolean streamWrappers (List<Root> wrappers) {
@@ -338,8 +309,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Print a simplified version of the given wrapper.
      *
-     * @param targetPath
-     *            The target path, including file name.
+     * @param targetPath The target path, including file name.
      */
     public void printSimpleLog (String targetPath) throws FileNotFoundException {
         HashMap<String, AnnotatedVariable> annotatedVariables = new HashMap<String, AnnotatedVariable>();
@@ -351,10 +321,8 @@ public class LogStreamManager implements ComListener {
     /**
      * Print a simplified version of the given wrapper.
      *
-     * @param targetPath
-     *            The target path, including file name.
-     * @param wrapper
-     *            The wrapper to simplify and print.
+     * @param targetPath The target path, including file name.
+     * @param wrapper The wrapper to simplify and print.
      */
     public void printSimpleLog (String targetPath, Root wrapper) throws FileNotFoundException {
         StringBuilder sb = new StringBuilder();
@@ -379,18 +347,15 @@ public class LogStreamManager implements ComListener {
      * Print the operations and header container in the wrapper given as argument. Set the
      * public variable PRETTY_PRINTING to true to enable human-readable output.
      *
-     * @param targetPath
-     *            The location to print the log file.
-     * @param wrapper
-     *            The wrapper to convert into a log file.
-     * @param autoName
-     *            if {@code true}, a name will be automatically generated.
+     * @param targetPath The location to print the log file.
+     * @param wrapper The wrapper to convert into a log file.
+     * @param autoName if {@code true}, a name will be automatically generated.
      */
     public void printLog (String targetPath, Root wrapper, boolean autoName) throws FileNotFoundException {
         Gson GSON;
         DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd_HHmmss");
         Calendar cal = Calendar.getInstance();
-        String fileName = autoName ? File.separator + dateFormat.format(cal.getTime()) + ".json" : "";
+        String fileName = autoName ? File.separator + dateFormat.format(cal.getTime()) + ".wrapper" : "";
         if (PRETTY_PRINTING) {
             GSON = new GsonBuilder().setPrettyPrinting().create();
         } else {
@@ -409,8 +374,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Unwrap a wrapper, add contents to knownVariables and operations.
      *
-     * @param wrapper
-     *            The wrapper to unwrap.
+     * @param wrapper The wrapper to unwrap.
      * @return True if the wrapper was successfully unwrapped. False otherwise.
      */
     public boolean unwrap (Root wrapper) {
@@ -437,8 +401,7 @@ public class LogStreamManager implements ComListener {
     /**
      * Unwrap a JSON string and store the contents.
      *
-     * @param json
-     *            THE JSON string to process.
+     * @param json THE JSON string to process.
      * @return True if the string was successfully parsed and stored. False otherwise.
      */
     public boolean unwrap (String json) {
@@ -455,7 +418,7 @@ public class LogStreamManager implements ComListener {
         if (messageType == CommunicatorMessage.WRAPPER) {
             List<Root> wrappers = communicator.getAllQueuedMessages();
             for (Root w : wrappers) {
-                if (this.unwrap(w) == false) {
+                if (!unwrap(w)) {
                     return;
                 }
             }
@@ -496,8 +459,7 @@ public class LogStreamManager implements ComListener {
      * Set the CommunicatorListener which will be notified when this Communicator accepts
      * a message.
      *
-     * @param newListener
-     *            The new CommunicatorListener.
+     * @param newListener The new CommunicatorListener.
      */
     public void setListener (ComListener newListener) {
         listener = newListener;
